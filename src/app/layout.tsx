@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
+import { Libre_Franklin } from 'next/font/google'
+import '@/styles/globals.css'
+import Header from '@/components/shared/header'
+import Footer from '@/components/shared/footer'
 
-const inter = Inter({ subsets: ['latin'] })
+const Libre = Libre_Franklin({ subsets: ['latin'],style:['normal','italic'],variable:"--font-libre-franklin" })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={Libre.className}>
+        <Header/>
+        {children}
+        <Footer/>
+      </body>
     </html>
   )
 }
