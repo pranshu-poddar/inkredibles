@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="bg-white">
       <div className="container2 pb-6">
 
-        <div className="mt-16 grid grid-cols-1 gap-8 border-t px-10 border-gray-100 pt-16 md:grid-cols-4 lg:grid-cols-6">
+        <div className="mt-16 grid grid-cols-1 gap-8 border-t px-10 border-gray-200 pt-16 md:grid-cols-4 lg:grid-cols-6">
           <div className="text-center sm:text-left">
             <h6 className=" font-semibold text-gray-900">Information</h6>
 
@@ -182,7 +182,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-16 border-t border-gray-100 pt-6 px-10 sm:flex sm:items-center sm:justify-between">
+        <div className="mt-16 border-t border-gray-200 pt-6 px-10 sm:flex sm:items-center sm:justify-between">
           <p className="text-center text-sm text-gray-500 sm:text-left">
             Copyright &copy; 2023. All rights reserved.
           </p>

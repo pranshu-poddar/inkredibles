@@ -1,11 +1,13 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
-import React from 'react'
+import React, { RefObject } from 'react'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CarouselItems } from '@/__mocks__/carousel.mock';
 import Image from 'next/image';
 import Link from 'next/link';
+import { CommonAssets } from '@/constants/assets.constant';
 
 const MainCarousel = () => {
     var settings = {
@@ -24,9 +26,16 @@ const MainCarousel = () => {
             <div className='w-10 h-1 bg-white hover:bg-orange-500 transition-all duration-300 ease-out'></div>
         )
     };
+    const sliderRef: RefObject<Slider> = React.createRef();
     return (
-        <div >
-            <Slider {...settings}>
+        <div className='relative group'>
+            <img
+                className="w-[3rem] absolute top-1/2 z-10 left-[2rem] opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out translate-x-full group-hover:translate-x-0 cursor-pointer"
+                onClick={() => sliderRef?.current?.slickPrev()}
+                src={CommonAssets.LeftArrow}
+                alt="previous arrow"
+            />
+            <Slider ref={sliderRef} {...settings}>
                 {
                     CarouselItems.map((item) => {
                         return <div key={item.id} style={{ backgroundImage: `url(${item.bgImg})` }} className='flex h-[95vmin] w-full relative text-white justify-center items-center p-20'>
@@ -40,6 +49,12 @@ const MainCarousel = () => {
                     })
                 }
             </Slider>
+            <img
+                className="w-[3rem] absolute top-1/2 z-10 right-[2rem] opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out -translate-x-full group-hover:translate-x-0 cursor-pointer"
+                onClick={() => sliderRef?.current?.slickNext()}
+                src={CommonAssets.RightArrow}
+                alt="next arrow"
+            />
         </div>
     )
 }

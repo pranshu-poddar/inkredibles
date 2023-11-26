@@ -8,6 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors:{
+        inkredible:{
+          black:"#242424"
+        }
+      }
     },
   },
   plugins: [require("@tailwindcss/typography")],

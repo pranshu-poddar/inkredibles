@@ -27,16 +27,21 @@ body{
 
 @layer base {
   h1{
-    @apply text-3xl sm:text-5xl text-gray-800 font-bold
+    @apply text-3xl sm:text-5xl text-inkredible-black font-bold
   }
 
   h2 {
     font-size: 36px;
+    @apply text-inkredible-black
   }
 
   p,a,li {
     font-size: 13px;
     color: gray;
+  }
+
+  h3{
+    @apply text-inkredible-black
   }
 
   small {
