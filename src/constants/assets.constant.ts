@@ -8,6 +8,12 @@ export const CommonAssets = {
     LeftArrow:"images/common/left-chevron.png",
 }
 
+export const AboutUsAssets = {
+    AboutUsBanner :"/images/about-us/about-banner.webp",
+    SkillsBanner :"/images/about-us/about2.webp",
+
+}
+
 export const HomeAssets = {
     WomenBanner:"/images/home/banner/banner2.webp",
     MenBanber:"/images/home/banner/banner4.webp",

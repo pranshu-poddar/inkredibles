@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 const Header = () => {
   return (
-    <section className='bg-white relative w-full container2'>
+    <section className='bg-white relative border-b w-full container2'>
       {/* top section  */}
       <div className='flex pt-8 pb-4 md:px-10 justify-between '>
         {/* logo  */}
@@ -15,7 +15,7 @@ const Header = () => {
         {/* search bar  */}
         <SearchBar />
         <div className='flex items-center gap-4'>
-          <small><span>Login</span> / <span>Register</span></small>
+          <Link href={"/login"}>Login / Register</Link>
           <div className='flex rounded-full border py-3 gap-2 px-5'>
             <Image alt='shopping cart' src={CommonAssets.ShoppingCart} className='opacity-50' width={20} height={20} />
             <small> 2 items</small>
@@ -23,7 +23,7 @@ const Header = () => {
         </div>
       </div>
       {/* navbar */}
-      <div className='w-fullbg-white bg-opacity-90 z-50'>
+      <div className='w-full bg-white bg-opacity-90 z-50'>
       <div className='flex md:px-10 py-4 justify-between'>
         <div className='flex gap-12'>
           {

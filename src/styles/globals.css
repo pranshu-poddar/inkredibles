@@ -40,11 +40,11 @@ body{
     color: gray;
   }
 
-  h3{
+  h3,label,input{
     @apply text-inkredible-black
   }
 
-  small {
+  small,button {
     font-size: 12px;
     ;
   }
