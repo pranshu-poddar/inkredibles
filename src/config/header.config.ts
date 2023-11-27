@@ -1,6 +1,12 @@
 import { Pages } from "@/constants/page.constant";
 
-export const NavRoutes = [
+ type routeType ={
+    label:string,
+    path:string,
+    subroutes?:routeType[]
+}
+
+export const NavRoutes:routeType[] = [
     {label:"Home",path:Pages.Home},
     {label:"Shop",path:Pages.Shop},
     {label:"Blog",path:Pages.Blog},
