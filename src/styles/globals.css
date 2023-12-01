@@ -10,6 +10,7 @@ html,body{
   box-sizing: border-box;
 }
 
+
 /* For Webkit browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
   width: 12px;
