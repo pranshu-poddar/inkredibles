@@ -38,7 +38,7 @@ const Skills = () => {
 
   return (
     <div className='container2 pt-24' ref={skillsRef}>
-      <div className='flex px-10 gap-8 justify-between'>
+      <div className='flex max-lg:flex-col-reverse px-10 gap-8 justify-between'>
         <div className='w-3/5'>
           <h2 className='text-2xl'>We have skills to show</h2>
           <div className='grid gap-4 mt-6'>

@@ -1,5 +1,5 @@
 export const CommonAssets = {
-    Logo:"/logo.jpg",
+    Logo:"/logo.png",
     ShoppingCart:"/images/common/basket.png",
     DropDown:"/images/common/dropdown.png",
     Prev:"/images/common/prev.png",

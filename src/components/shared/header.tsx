@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
-import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
 import SearchBar from './search-bar'
 import { CommonAssets } from '@/constants/assets.constant'
@@ -29,15 +29,17 @@ const Header = () => {
   return (
     <section className='bg-white relative border-b w-full '>
       {/* top section  */}
-      <div className='flex pt-8 pb-4 container2 md:px-[72px] justify-between '>
+      <div className='flex pt-4 pb-4 container2 md:px-[72px] justify-between '>
         {/* logo  */}
-        <Image alt='inkredibles logo' width={80} height={24} src={CommonAssets.Logo} />
+       <div className='w-40 h-12 overflow-hidden flex items-center'>
+       <img alt='inkredibles logo' className='invert' src={CommonAssets.Logo} />
+       </div>
         {/* search bar  */}
         <SearchBar />
         <div className='flex items-center gap-4'>
           <Link href={"/login"}>Login / Register</Link>
           <div className='flex rounded-full border py-3 gap-2 px-5'>
-            <Image alt='shopping cart' src={CommonAssets.ShoppingCart} className='opacity-50' width={20} height={20} />
+            <img alt='shopping cart' src={CommonAssets.ShoppingCart} className='opacity-50 w-4' />
             <small> 2 items</small>
           </div>
         </div>
@@ -48,7 +50,7 @@ const Header = () => {
           <div className='flex gap-12'>
             {
               NavRoutes.map((route) => {
-                return <small className='flex items-center [&>*]:hover:text-orange-600 gap-2' key={route.label}><Link href={route.path} >{route.label}</Link>{route?.subroutes && <Image src={CommonAssets.DropDown} alt='dropdown' width={10} height={10} />}</small>
+                return <small className='flex items-center [&>*]:hover:text-orange-600 gap-2' key={route.label}><Link href={route.path} >{route.label}</Link>{route?.subroutes && <img src={CommonAssets.DropDown} alt='dropdown' className='w-4' />}</small>
               })
             }
           </div>
