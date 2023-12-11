@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-html,body{
+html,
+body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
@@ -16,20 +17,30 @@ html,body{
   width: 12px;
 }
 
+.dropdownscroll{
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+}
+
 ::-webkit-scrollbar-thumb {
-  background-color: lightgrey; /* Set color of the thumb */
-  border-radius: 6px; /* Set border radius of the thumb */
+  background-color: lightgrey;
+  /* Set color of the thumb */
+  border-radius: 6px;
+  /* Set border radius of the thumb */
 }
 
 ::-webkit-scrollbar-track {
-  background-color: transparent; /* Set color of the track */
+  background-color: transparent;
+  /* Set color of the track */
 }
+
 .container2 {
   @apply mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 box-border;
 }
 
 @layer base {
-  h1{
+  h1 {
     @apply text-3xl sm:text-5xl text-inkredible-black font-bold
   }
 
@@ -38,16 +49,22 @@ html,body{
     @apply text-inkredible-black
   }
 
-  p,a,li {
+  p, a, li {
     font-size: 13px;
     color: gray;
+    letter-spacing: 0.5px;
+  }
+  h4{
+    @apply text-inkredible-black text-lg font-semibold
   }
 
-  h3,label,input{
+  h3,
+  label,
+  input {
     @apply text-inkredible-black
   }
 
-  small,button {
+  small, button {
     font-size: 12px;
     ;
   }

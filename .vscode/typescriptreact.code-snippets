@@ -1,20 +1,19 @@
 {
-	"React Functional Component": {
-	  "prefix": "raf",
-	  "body": [
-		"import React from 'react';",
-		"",
-		"const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} = () => {",
-		"  return (",
-		"    <div>",
-		"      $0",
-		"    </div>",
-		"  );",
-		"};",
-		"",
-		"export default ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g};"
-	  ],
-	  "description": "React Functional Component"
-	}
+  "React Functional Component": {
+    "prefix": "raf",
+    "body": [
+      "import React from 'react';",
+      "",
+      "const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} = () => {",
+      "  return (",
+      "    <div>",
+      "      $0",
+      "    </div>",
+      "  );",
+      "};",
+      "",
+      "export default ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g};"
+    ],
+    "description": "React Functional Component"
   }
-  
+}

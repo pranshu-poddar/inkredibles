@@ -8,16 +8,29 @@ import ProductSection from "@/components/home/product-section";
 import SpecialSection from "@/components/home/special-section";
 import { HomeAssets } from "@/constants/assets.constant";
 
+export const metadata = {
+  title: "Inkredible | Home"
+}
+
 export default function Home() {
   return (
-    <main >
+    <main>
       <Newsletter />
       <MainCarousel />
-      <ProductSection title="For Women's Collection" banner={HomeAssets.WomenBanner} Products={WomenCollection} />
+      <ProductSection
+        title="For Women's Collection"
+        banner={HomeAssets.WomenBanner}
+        Products={WomenCollection}
+      />
       <SpecialSection />
-      <ProductSection title="For Men's Collection" banner={HomeAssets.MenBanber} Products={MenCollections} isReversed={true} />
+      <ProductSection
+        title="For Men's Collection"
+        banner={HomeAssets.MenBanber}
+        Products={MenCollections}
+        isReversed={true}
+      />
       <BlogSection blogs={Blogs} />
-      <InstagramSection/>
+      <InstagramSection />
     </main>
-  )
+  );
 }

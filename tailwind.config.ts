@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+import daisyuiPlugin from "daisyui";
+import typographyPlugin from "@tailwindcss/typography";
 
 const config: Config = {
   content: [
@@ -8,13 +10,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors:{
-        inkredible:{
-          black:"#242424"
-        }
-      }
+      colors: {
+        inkredible: {
+          black: "#242424",
+        },
+      },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [typographyPlugin, daisyuiPlugin],
 };
 export default config;

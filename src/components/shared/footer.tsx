@@ -1,35 +1,46 @@
-import React from 'react'
+import React from "react";
 
 const Footer = () => {
   return (
     <footer className="bg-white">
       <div className="container2 pb-6">
-
         <div className="mt-16 grid grid-cols-1 gap-8 border-t px-10 border-gray-200 pt-16 md:grid-cols-4 lg:grid-cols-6">
           <div className="text-center sm:text-left">
             <h6 className=" font-semibold text-gray-900">Information</h6>
 
             <ul className="mt-8 space-y-4 text-sm">
               <li>
-                <a className="text-gray-700 transition hover:text-gray-700/75" href="/">
+                <a
+                  className="text-gray-700 transition hover:text-gray-700/75"
+                  href="/"
+                >
                   Company History
                 </a>
               </li>
 
               <li>
-                <a className="text-gray-700 transition hover:text-gray-700/75" href="/">
+                <a
+                  className="text-gray-700 transition hover:text-gray-700/75"
+                  href="/"
+                >
                   Meet the Team
                 </a>
               </li>
 
               <li>
-                <a className="text-gray-700 transition hover:text-gray-700/75" href="/">
+                <a
+                  className="text-gray-700 transition hover:text-gray-700/75"
+                  href="/"
+                >
                   Employee Handbook
                 </a>
               </li>
 
               <li>
-                <a className="text-gray-700 transition hover:text-gray-700/75" href="/">
+                <a
+                  className="text-gray-700 transition hover:text-gray-700/75"
+                  href="/"
+                >
                   Careers
                 </a>
               </li>
@@ -41,25 +52,37 @@ const Footer = () => {
 
             <ul className="mt-8 space-y-4 text-sm">
               <li>
-                <a className="text-gray-700 transition hover:text-gray-700/75" href="/">
+                <a
+                  className="text-gray-700 transition hover:text-gray-700/75"
+                  href="/"
+                >
                   Web Development
                 </a>
               </li>
 
               <li>
-                <a className="text-gray-700 transition hover:text-gray-700/75" href="/">
+                <a
+                  className="text-gray-700 transition hover:text-gray-700/75"
+                  href="/"
+                >
                   Web Design
                 </a>
               </li>
 
               <li>
-                <a className="text-gray-700 transition hover:text-gray-700/75" href="/">
+                <a
+                  className="text-gray-700 transition hover:text-gray-700/75"
+                  href="/"
+                >
                   Marketing
                 </a>
               </li>
 
               <li>
-                <a className="text-gray-700 transition hover:text-gray-700/75" href="/">
+                <a
+                  className="text-gray-700 transition hover:text-gray-700/75"
+                  href="/"
+                >
                   Google Ads
                 </a>
               </li>
@@ -70,9 +93,11 @@ const Footer = () => {
             <h6 className=" font-semibold text-gray-900">Contact Us</h6>
 
             <ul className="mt-8 space-y-4 text-sm">
-
               <li>
-                <a className="text-gray-700 transition hover:text-gray-700/75" href="/">
+                <a
+                  className="text-gray-700 transition hover:text-gray-700/75"
+                  href="/"
+                >
                   Upcoming Events
                 </a>
               </li>
@@ -137,9 +162,7 @@ const Footer = () => {
                       viewBox="0 0 24 24"
                       aria-hidden="true"
                     >
-                      <path
-                        d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"
-                      />
+                      <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                     </svg>
                   </a>
                 </li>
@@ -147,22 +170,22 @@ const Footer = () => {
             </ul>
           </div>
 
-
           <div className="text-center sm:text-left md:col-span-4 lg:col-span-2 lg:col-start-5">
-            <h6 className=" font-semibold text-gray-900">Join Our Newsletter Now</h6>
+            <h6 className=" font-semibold text-gray-900">
+              Join Our Newsletter Now
+            </h6>
 
             <div className="mx-auto mt-8 max-w-md sm:ms-0">
-              <p
-                className=" leading-relaxed text-gray-500 "
-              >
-                Exceptional quality. Ethical factories. Sign up to enjoy free U.S. shipping and returns on your first order.
+              <p className=" leading-relaxed text-gray-500 ">
+                Exceptional quality. Ethical factories. Sign up to enjoy free
+                U.S. shipping and returns on your first order.
               </p>
 
               <form className="mt-4">
-                <div
-                  className="flex flex-col gap-4 sm:flex-row lg:flex-col lg:items-start"
-                >
-                  <label htmlFor="email" className="sr-only">Email</label>
+                <div className="flex flex-col gap-4 sm:flex-row lg:flex-col lg:items-start">
+                  <label htmlFor="email" className="sr-only">
+                    Email
+                  </label>
 
                   <input
                     className="w-full border placeholder:text-sm border-gray-200 px-6 py-3 shadow-sm"
@@ -186,16 +209,21 @@ const Footer = () => {
           <p className="text-center text-sm text-gray-500 sm:text-left">
             Copyright &copy; 2023. All rights reserved.
           </p>
-          <ul  className="mt-4 flex justify-center gap-6 sm:mt-0 sm:justify-start">
-            <li><a href='/'>Order History</a></li>
-            <li><a href='/'>Wish List</a></li>
-            <li><a href='/'>Newsletter</a></li>
+          <ul className="mt-4 flex justify-center gap-6 sm:mt-0 sm:justify-start">
+            <li>
+              <a href="/">Order History</a>
+            </li>
+            <li>
+              <a href="/">Wish List</a>
+            </li>
+            <li>
+              <a href="/">Newsletter</a>
+            </li>
           </ul>
-
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
