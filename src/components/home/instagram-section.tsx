@@ -6,7 +6,7 @@ import SliderContainer from "../shared/slider";
 const InstagramSection = () => {
   return (
     <div className="container2 text-center ">
-      <div className=" px-10 relative">
+      <div className="border-t pt-16 mt-16 px-10 relative">
         <h2 className="font-semibold">Follow us On Instagram</h2>
         <p className="mt-2 mb-12">
           Contemporary, minimal and modern designs embody the Lavish Alice

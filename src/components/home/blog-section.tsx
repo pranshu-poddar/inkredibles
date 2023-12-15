@@ -6,7 +6,7 @@ import SliderContainer from "../shared/slider";
 const BlogSection = ({ blogs }: { blogs: BlogTypes[] }) => {
   return (
     <div className="container2 text-center ">
-      <div className="border-b pb-16 mb-16 px-10">
+      <div className=" px-10">
         <h2 className="font-semibold">Latest Blogs</h2>
         <p className="mt-2 mb-12">
           Contemporary, minimal and modern designs embody the Lavish Alice

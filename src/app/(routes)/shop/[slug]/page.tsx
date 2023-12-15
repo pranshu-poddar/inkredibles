@@ -1,31 +1,62 @@
 'use client'
 /* eslint-disable @next/next/no-img-element */
+import { InstaPics } from '@/__mocks__/instagram.mocks';
+import { MenCollections} from '@/__mocks__/product.mock';
+import SliderContainer from '@/components/shared/slider';
+import RelatedProducts from '@/components/shop/related-products';
+import Tabs from '@/components/shop/tabs';
 import React, { useState } from 'react';
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
-const Product = () => {
+const Product = ({params}:{params:{slug:string}}) => {
+  const product = MenCollections.find((p) => p.label === decodeURIComponent(params.slug));
   const [quantity, setquantity] = useState(1)
+  const [isLiked, setisLiked] = useState(false)
   return (
     <section className="text-gray-600 body-font overflow-hidden">
-      <div className="container2 px-5 py-24 mx-auto">
+      <div className="container2 px-5 pt-24 mx-auto">
         <div className="px-10 mx-auto flex flex-wrap">
-          <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="https://dummyimage.com/400x400" />
+
+          {/* left section  */}
+          <div className="md:w-[35%] w-full md:h-auto ">
+            <div className='relative w-full h-[80dvh] md:h-[80%]'>
+              <img alt="ecommerce" className='object-cover absolute inset-0 h-full w-full' src={product?.img} />
+            </div>
+            <SliderContainer SlidesToShow={4}>
+              {InstaPics.map((pic) => {
+                return (
+                  <div
+                    className="h-[7rem] scale-90 overflow-hidden relative"
+                    key={pic}
+                  >
+                    <img
+                      className="absolute inset-0 object-cover"
+                      src={pic}
+                      alt="insta pic"
+                    />
+                  </div>
+                );
+              })}
+            </SliderContainer>
+          </div>
+          {/* right section  */}
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h1 className="text-3xl title-font font-medium mb-1">The Catcher in the Rye</h1>
             <div className="flex mb-4">
               <span className="flex items-center">
-                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-yellow-500" viewBox="0 0 24 24">
+                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-orange-500" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                 </svg>
-                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-yellow-500" viewBox="0 0 24 24">
+                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-orange-500" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                 </svg>
-                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-yellow-500" viewBox="0 0 24 24">
+                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-orange-500" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                 </svg>
-                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-yellow-500" viewBox="0 0 24 24">
+                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-orange-500" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                 </svg>
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-yellow-500" viewBox="0 0 24 24">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-orange-500" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                 </svg>
                 <span className="text-gray-600 ml-3">4 Reviews</span>
@@ -39,7 +70,7 @@ const Product = () => {
                 <span className="mr-3">Color</span>
                 <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
                 <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
-                <button className="border-2 border-gray-300 ml-1 bg-yellow-500 rounded-full w-6 h-6 focus:outline-none"></button>
+                <button className="border-2 border-gray-300 ml-1 bg-orange-500 rounded-full w-6 h-6 focus:outline-none"></button>
               </div>
               <div className="flex ml-6 items-center">
                 <span className="mr-3">Size</span>
@@ -61,12 +92,19 @@ const Product = () => {
             <div className="flex gap-4">
               <div className='flex items-center gap-4'>
                 <label htmlFor='quantity'>Quantity</label>
-                <input name='quantity' onChange={(e)=>setquantity(parseInt(e.target.value))} value={quantity} type='number' className="flex-1 w-24 appearance-no  ne outline-none border border-gray-200 rounded py-2 px-4 " />
-              <button className="flex text-white bg-inkredible-black hover:bg-orange-500 transition-all duration-150 ease-out py-3 px-6 items-center rounded">ADD TO CART</button>
+                <input name='quantity' onChange={(e) => setquantity(parseInt(e.target.value))} value={quantity} type='number' className="flex-1 w-24 appearance-no  ne outline-none border border-gray-200 rounded py-2 px-4 " />
+                <button className="flex text-white bg-inkredible-black hover:bg-orange-500 transition-all duration-150 ease-out py-3 px-6 items-center rounded">ADD TO CART</button>
               </div>
             </div>
+            <button onClick={() => setisLiked(prev => !prev)} className='flex text-base group items-center mt-8'>{isLiked ? <FaHeart className="w-5 fill-red-500 h-auto" /> : <FaRegHeart className="w-5 group-hover:fill-red-500 transition-all duration-150 ease-out h-auto" />}  Add To Wish List</button>
           </div>
+
         </div>
+
+        <Tabs />
+        <RelatedProducts Products={MenCollections} title="Related Products" />
+        {/* <RelatedProducts Products={WomenCollection} title="Upsell Products" /> */}
+
       </div>
     </section>
   );

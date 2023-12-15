@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { ProductType, WomenCollection } from "@/__mocks__/product.mock";
+import { ProductType} from "@/__mocks__/product.mock";
 import React from "react";
 import ProductCard from "./product-card";
-import { HomeAssets } from "@/constants/assets.constant";
 
 type ProductSectionProps = {
   isReversed?: boolean;

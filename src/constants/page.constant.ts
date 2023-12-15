@@ -1,7 +1,7 @@
 const PublicPages = {
   Home: "/",
   Shop: "/shop",
-  Blog: "/blog",
+  Blog: "/blogs",
   AboutUs: "/about-us",
   ContactUs: "/contact-us",
 };
