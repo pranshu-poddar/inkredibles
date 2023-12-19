@@ -22,7 +22,7 @@ const AddressForm = ({setstep}:AdressFormProps) => {
                     <CustomInput label='State' type='text' name='state' placeholder='State' span='sm:col-span-2' />
                     <CustomInput label='Zip Code' type='text' name='zip' placeholder='Zip Code' span='sm:col-span-2' />
                 </div>
-                <div className=" flex mt-10 justify-between items-center">
+                <div className=" flex mt-10 max-sm:flex-col justify-between gap-4 sm:items-center">
                     <button onClick={() => setstep(1)} className="hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 px-10  bg-gray-800 text-base font-medium leading-4 text-white">Back to Cart</button>
                     <button onClick={() => setstep(3)} className="hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 px-10  bg-gray-800 text-base font-medium leading-4 text-white">Continue to Payment</button>
                 </div>

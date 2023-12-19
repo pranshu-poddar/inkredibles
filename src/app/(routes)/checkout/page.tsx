@@ -10,7 +10,7 @@ const CheckoutPage = () => {
     return (
         <div className="container2 mx-auto p-4">
             <Steps currentStep={step} />
-            <div className='px-10 pt-16'>
+            <div className='lg:px-10 pt-16'>
                 {step == 1 ? <CartSection setstep={setstep} /> :
                     step == 2 ? <AddressForm setstep={setstep}/> : <PaymentPage />}
             </div>

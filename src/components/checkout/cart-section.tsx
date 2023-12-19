@@ -8,7 +8,7 @@ type CartSectionProps = {
 
 const CartSection = ({ setstep }: CartSectionProps) => {
     return (
-        <div className='flex gap-8 relative '>
+        <div className='flex gap-8 max-md:flex-col relative '>
             <div className="flex flex-1 h-fit sticky top-0 flex-col px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 drop-shadow-sm space-y-6">
                 <h3 className="text-3xl  font-semibold leading-5 text-inkredible-black">Cart</h3>
                 <ul className="flex w-full space-y-4 flex-col border-gray-200 divide-y pb-4">
