@@ -5,9 +5,12 @@ import SearchBar from "./search-bar";
 import { CommonAssets } from "@/constants/assets.constant";
 import { NavRoutes } from "@/config/header.config";
 import Link from "next/link";
+import ShoppingCart from "./shopping-cart";
 
 const Header = () => {
   const [showComponent, setShowComponent] = useState(false);
+  const [showCart, setShowCart] = useState(false);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,10 +27,14 @@ const Header = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []); // Empty dependency array to ensure the effect runs only once
+  }, []); 
 
   return (
     <section className="bg-white relative border-b w-full ">
+      
+      <div className={`fixed z-50 right-0 transition-all duration-300 ease-in-out ${showCart?"translate-x-0":"translate-x-full"}`}>
+        <ShoppingCart setshowCart={setShowCart}/>
+      </div>
       {/* top section  */}
       <div className="flex pt-4 pb-4 container2 md:px-[72px] justify-between ">
         {/* logo  */}
@@ -42,7 +49,7 @@ const Header = () => {
         <SearchBar />
         <div className="flex items-center gap-4">
           <Link href={"/login"}>Login / Register</Link>
-          <div className="flex rounded-full border py-3 gap-2 px-5">
+          <div onClick={()=>setShowCart(!showCart)} className="flex rounded-full border cursor-pointer py-3 gap-2 px-5">
             <img
               alt="shopping cart"
               src={CommonAssets.ShoppingCart}
@@ -54,7 +61,7 @@ const Header = () => {
       </div>
       {/* navbar */}
       <div
-        className={`w-full bg-white bg-opacity-90 top-0 z-50 ${
+        className={`w-full bg-white bg-opacity-90 top-0 z-40 ${
           showComponent && "fixed"
         }`}
       >

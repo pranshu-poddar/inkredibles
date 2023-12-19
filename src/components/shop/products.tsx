@@ -37,7 +37,7 @@ const Products = ({ ProductList }: ProductsProps) => {
             <div className={`grid gap-8 ${gridCols == 1 ? "grid-cols-1" : gridCols == 3 ? "grid-cols-3" : "grid-cols-4"}`}>
                 {
                     ProductList.map((product) => {
-                        return <ProductCard key={product.label} img={product.img} tag={product.tag} img2={product.img2} label={product.label} price={product.price} />
+                        return <ProductCard discount={product.discount} key={product.label} img={product.img} tag={product.tag} img2={product.img2} label={product.label} price={product.price} />
                     })}
             </div>
             <div className='w-full flex justify-center mt-12 border p-2'>

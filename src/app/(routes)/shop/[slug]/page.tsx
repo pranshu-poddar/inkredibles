@@ -1,7 +1,7 @@
 'use client'
 /* eslint-disable @next/next/no-img-element */
 import { InstaPics } from '@/__mocks__/instagram.mocks';
-import { MenCollections} from '@/__mocks__/product.mock';
+import { MenCollections, Sizes} from '@/__mocks__/product.mock';
 import SliderContainer from '@/components/shared/slider';
 import RelatedProducts from '@/components/shop/related-products';
 import Tabs from '@/components/shop/tabs';
@@ -41,7 +41,7 @@ const Product = ({params}:{params:{slug:string}}) => {
           </div>
           {/* right section  */}
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-            <h1 className="text-3xl title-font font-medium mb-1">The Catcher in the Rye</h1>
+            <h1 className="text-3xl title-font font-medium mb-1">{product?.label}</h1>
             <div className="flex mb-4">
               <span className="flex items-center">
                 <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-orange-500" viewBox="0 0 24 24">
@@ -63,7 +63,7 @@ const Product = ({params}:{params:{slug:string}}) => {
               </span>
 
             </div>
-            <span className="title-font font-medium text-xl text-inkredible-black ">$58.00</span>
+            {product?.discount?<p className="tracking-wide text-xl font-medium "><span className="line-through decoration-red-500 decoration-2 mr-2">${product.price}</span> ${(100-product.discount)/100*product.price}</p> :<p className="tracking-wide text-xl font-medium">${product?.price}</p>}
             <p className="leading-relaxed mt-6">Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.</p>
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
               <div className="flex">
@@ -75,11 +75,10 @@ const Product = ({params}:{params:{slug:string}}) => {
               <div className="flex ml-6 items-center">
                 <span className="mr-3">Size</span>
                 <div className="relative">
-                  <select className="rounded border appearance-none border-gray-300 py-2 outline-none cursor-pointer pl-3 pr-10">
-                    <option>SM</option>
-                    <option>M</option>
-                    <option>L</option>
-                    <option>XL</option>
+                  <select defaultValue={"L"} className="rounded border appearance-none border-gray-300 py-2 outline-none cursor-pointer pl-3 pr-10">
+                    {Sizes.map((size)=>{
+                      return <option key={size} value={size}>{size}</option>
+                    })}
                   </select>
                   <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4" viewBox="0 0 24 24">

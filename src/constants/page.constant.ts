@@ -4,6 +4,7 @@ const PublicPages = {
   Blog: "/blogs",
   AboutUs: "/about-us",
   ContactUs: "/contact-us",
+  Checkout: "/checkout",
 };
 
 const ProtectedPages = {};

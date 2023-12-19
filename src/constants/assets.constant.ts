@@ -4,8 +4,8 @@ export const CommonAssets = {
   DropDown: "/images/common/dropdown.png",
   Prev: "/images/common/prev.png",
   next: "/images/common/next.png",
-  RightArrow: "images/common/right-chevron.png",
-  LeftArrow: "images/common/left-chevron.png",
+  RightArrow: "/images/common/right-chevron.png",
+  LeftArrow: "/images/common/left-chevron.png",
 };
 
 export const AboutUsAssets = {

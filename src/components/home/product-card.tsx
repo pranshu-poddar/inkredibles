@@ -26,7 +26,7 @@ const ProductCard = (product: ProductType) => {
         </h3>
 
         <div className="mt-1.5 flex items-center justify-between text-gray-900">
-          <p className="tracking-wide">${product.price}</p>
+          {product.discount?<p className="tracking-wide"><span className="line-through decoration-red-500 decoration-2 mr-2">${product.price}</span> ${(100-product.discount)/100*product.price}</p> :<p className="tracking-wide">${product.price}</p>}
 
           <p className="text-xs uppercase tracking-wide">6 Colors</p>
         </div>
