@@ -5,7 +5,7 @@ import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TSignupSchema, signupSchema } from "@/lib/types";
-import { Register } from "@/actions/register";
+import { Register } from "@/actions/auth/register";
 import { useRouter } from "next/navigation";
 
 const SignUp = () => {

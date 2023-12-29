@@ -17,12 +17,6 @@ body {
   width: 12px;
 }
 
-.dropdownscroll{
-  ::-webkit-scrollbar {
-    width: 4px;
-  }
-}
-
 ::-webkit-scrollbar-thumb {
   background-color: lightgrey;
   /* Set color of the thumb */
@@ -39,7 +33,6 @@ body {
   @apply mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 box-border;
 }
 
-@layer base {
   h1 {
     @apply text-3xl sm:text-5xl text-inkredible-black font-bold
   }
@@ -68,4 +61,3 @@ body {
     font-size: 12px;
     ;
   }
-}

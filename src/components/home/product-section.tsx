@@ -1,7 +1,10 @@
+'use client'
 /* eslint-disable @next/next/no-img-element */
 import { ProductType} from "@/__mocks__/product.mock";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "./product-card";
+import { TProductSchema } from "@/lib/types";
+import { getAllProducts } from "@/actions/product/get-products";
 
 type ProductSectionProps = {
   isReversed?: boolean;
@@ -16,6 +19,14 @@ const ProductSection = ({
   title,
   banner,
 }: ProductSectionProps) => {
+  const [products, setproducts] = useState<TProductSchema[]>([])
+  const [loading, setLoading] = useState(true); // Loading state
+  useEffect(() => {
+      getAllProducts().then(data => {
+          setproducts(data)
+          setLoading(false);
+      })
+  }, [])
   return (
     <section>
       <div className="max-w-screen-xl px-4 py-8 sm:px-6 mx-auto sm:py-12 lg:px-8 lg:py-16">
@@ -45,10 +56,10 @@ const ProductSection = ({
               </ul>
             </div>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-              {Products.map((product) => {
+              {products.map((product) => {
                 return (
-                  <div key={product.label}>
-                    <ProductCard {...product} />
+                  <div key={product.name}>
+                    <ProductCard product={product} />
                   </div>
                 );
               })}

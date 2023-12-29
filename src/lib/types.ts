@@ -1,4 +1,5 @@
-import { z } from "zod";
+import { ProductCategory } from "@/constants/data.constant";
+import { ZodType, z } from "zod";
 
 export const loginSchema = z.object({
   email: z
@@ -51,3 +52,47 @@ export const signupSchema = z
   });
 
 export type TSignupSchema = z.infer<typeof signupSchema>;
+
+// **ProductDetail Schema**
+export const ProductDetailSchema = z.object({
+  size: z.string().min(1, { message: "Size is required" }),
+  color: z.string().min(1, { message: "Color is required" }),
+  quantity: z
+    .number()
+    .int()
+    .min(5, { message: "Quantity must be greater than or equal to 5" }),
+});
+
+export type TProductDetailSchema = z.infer<typeof ProductDetailSchema>;
+
+export const ProductSchema = z.object({
+  description: z.string().min(1, { message: "Description is required" }),
+  category: z.string().refine(
+    (value) => {
+      return ProductCategory.includes(value);
+    },
+    { message: "Invalid category" },
+  ),
+  imageUrl: z.array(z.string()),
+  name: z.string().min(1, { message: "Name is required" }),
+  price: z
+    .number()
+    .min(0, { message: "Price must be greater than or equal to 0" }),
+  discount: z
+    .number()
+    .min(0, { message: "Discount can't be negative" })
+    .max(100, { message: "Discount must be less than or equal to 100" }),
+  updatedAt: z.date().optional(),
+  productDetails: z
+    .array(ProductDetailSchema)
+    .min(1, { message: "At least one product detail is required" }),
+});
+
+export type TProductSchema = z.infer<typeof ProductSchema>;
+
+export type ImageType = {
+  title: string;
+  url: string;
+  thumb: string;
+  deleteUrl: string;
+};

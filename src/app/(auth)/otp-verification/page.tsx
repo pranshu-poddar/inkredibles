@@ -1,5 +1,5 @@
 'use client'
-import { verifyOtp } from '@/actions/verify-otp';
+import { verifyOtp } from '@/actions/auth/verify-otp';
 import { redirect, useRouter, useSearchParams } from 'next/navigation'
 import React, { useState } from 'react';
 import cookie from 'js-cookie';

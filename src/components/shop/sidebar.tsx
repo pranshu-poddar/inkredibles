@@ -11,8 +11,8 @@ const Sidebar = () => {
   const [size, setsize] = React.useState('');
 
   return (
-    <div className='w-[20%] space-y-6'>
-      <PriceRangeSlider priceRange={priceRange} min={200} max={2000} setPriceRange={setPriceRange} />
+    <div className='w-[20%] max-xs:hidden sticky top-20 space-y-6'>
+      {/* <PriceRangeSlider priceRange={priceRange} min={200} max={2000} setPriceRange={setPriceRange} /> */}
       <ProductCategories
         label='Filter By Category'
         productCategories={Category}

@@ -97,6 +97,6 @@ export const MenCollections = [
   },
 ];
 
-export const Sizes = ["XXL", "XL", "L", "M", "S", "XS", "XXS"];
+export const Sizes = ["XL", "L", "M", "S"];
 
 export type ProductType = (typeof WomenCollection)[0];

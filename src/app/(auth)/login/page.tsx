@@ -1,5 +1,5 @@
 "use client";
-import { SignIn } from "@/actions/login";
+import { SignIn } from "@/actions/auth/login";
 /* eslint-disable @next/next/no-img-element */
 import { TLoginSchema, loginSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
