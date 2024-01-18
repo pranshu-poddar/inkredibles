@@ -10,6 +10,8 @@ import CustomButton, { buttonStyles } from '../shared/custom-button';
 import FileUpload from '../shared/file-upload';
 import { RiDeleteBinFill } from "react-icons/ri";
 import { ProductCategory } from '@/constants/data.constant';
+import { useQueryClient } from '@tanstack/react-query';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const ProductForm = () => {
@@ -19,6 +21,7 @@ const ProductForm = () => {
       productDetails: [],
     },
   });
+  const queryClient = useQueryClient();
 
   const [images, setimages] = useState<ImageType[]>([]);
 
@@ -36,21 +39,24 @@ const ProductForm = () => {
     try {
       const response = await createProduct(data);
       if (response.status === 201) { // Check for successful creation
+        toast.success("Product added successfully")
         methods.reset(); // Clear all form fields
         setimages([]); // Clear uploaded images
-        console.log('Product added successfully!');
-        // Optional: Display a success message to the user
+        queryClient.invalidateQueries({ queryKey: ['products'] })
       } else {
-        // Handle other response codes (e.g., errors)
+        if (response.json.error) {
+          toast.error(response.json.error)
+        }
       }
     } catch (error) {
-      // Handle submission errors
+      toast.error("error adding product")
     }
   };
 
 
   return (
-    <div className='container2 pt-16'>
+    <div className='container2 bg-white pt-16'>
+      <Toaster/>
       <h2 className='mb-8'>Add Product</h2>
       <FormProvider {...methods}>
         <form className='grid gap-8' onSubmit={handleSubmit(onSubmit)}>
@@ -83,7 +89,7 @@ const ProductForm = () => {
                   </option>
                 ))}
               </select>
-              </div>
+            </div>
           </div>
           <div className='grid gap-8 grid-flow-col'>
             <CustomInput error={errors.name?.message} placeholder='Name' type='text' label='Name' name='name' />
@@ -136,7 +142,7 @@ const ProductForm = () => {
               Add Product Detail
             </CustomButton>
           </div>
-          <input type='submit' className={`${buttonStyles.base} ${buttonStyles.primary}`} value={isSubmitting ? 'Adding...' : 'Add Product'} disabled={isSubmitting} />
+          <input type='submit' className={`${buttonStyles.base} ${buttonStyles.large}`} value={isSubmitting ? 'Adding...' : 'Add Product'} disabled={isSubmitting} />
         </form>
       </FormProvider>
     </div>

@@ -9,7 +9,7 @@ export default async function createProduct(data: TProductSchema) {
     }
   
     try {
-      const { description, imageUrl,category, name,discount, price, productDetails } = data;
+      const { description, imageUrl,category, name,discount, price, productDetails} = data;
   
       // Create the product first
       const product = await prisma.product.create({

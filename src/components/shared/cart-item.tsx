@@ -1,24 +1,49 @@
 /* eslint-disable @next/next/no-img-element */
+import useStore from '@/lib/hooks/use-store';
+import { TCartItem } from '@/lib/types';
+import { useCartStore } from '@/store/cart-store';
 import React from 'react';
 
-const CartItem = () => {
+interface CartItemProps {
+    item:TCartItem,
+    itemInfo:{
+        description: string;
+        category: string;
+        imageUrl: string[];
+        name: string;
+        price: number;
+        discount: number;
+        updatedAt: Date;
+        createdAt: Date;
+        id: string;
+    } | null | undefined
+}
+
+const CartItem = ({item,itemInfo}:CartItemProps) => {
+    const cart = useCartStore()
+    const handleRemove = ()=>{
+        cart.removeItem(item)
+    }
+    
     return (
         <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
             <div className="flex w-full space-x-2 sm:space-x-4">
-                <img className="flex-shrink-0 object-cover w-20 h-20 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 " src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" alt="Polaroid camera" />
+                <img className="flex-shrink-0 object-cover w-20 h-20 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 " src={itemInfo?.imageUrl[0]} alt="Polaroid camera" />
                 <div className="flex flex-col justify-between w-full pb-4">
                     <div className="flex justify-between w-full pb-2 space-x-2">
                         <div className="space-y-1">
-                            <h3 className="text-lg font-semibold leadi sm:pr-8">Polaroid camera</h3>
-                            <p className="text-sm dark:text-gray-400">Classic</p>
+                            <h3 className="text-lg font-semibold leadi sm:pr-8">{itemInfo?.name}</h3>
+                            <p className="text-sm dark:text-gray-400">Color: <span className='text-inkredible-black font-medium capitalize'>{item.color}</span></p>
+                            <p className="text-sm dark:text-gray-400">Size: <span className='text-inkredible-black font-medium capitalize'>{item.size}</span></p>
+                            <p className="text-sm dark:text-gray-400">Quantity: <span className='text-inkredible-black font-medium capitalize'>{item.quantity}</span></p>
                         </div>
                         <div className="text-right">
-                            <p className="text-lg font-semibold">59.99€</p>
-                            <p className="text-sm line-through dark:text-gray-600">75.50€</p>
+                        {itemInfo?.discount ?<p className="tracking-wide text-xl font-medium "> ${(100 - itemInfo.discount) / 100 * itemInfo.price}</p>:<p className="tracking-wide text-xl font-medium ">{itemInfo?.price}</p>}
+                        {itemInfo?.discount && <p className="line-through decoration-red-500 decoration-2 mr-2">${itemInfo.price}</p>}
                         </div>
                     </div>
                     <div className="flex text-sm divide-x">
-                        <button type="button" className="flex items-center px-2 py-1 pl-0 space-x-1">
+                        <button onClick={handleRemove} type="button" className="flex hover:text-red-600 transition-all duration-300 ease-out items-center px-2 py-1 pl-0 space-x-1">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-4 h-4 fill-current">
                                 <path d="M96,472a23.82,23.82,0,0,0,23.579,24H392.421A23.82,23.82,0,0,0,416,472V152H96Zm32-288H384V464H128Z"></path>
                                 <rect width="32" height="200" x="168" y="216"></rect>

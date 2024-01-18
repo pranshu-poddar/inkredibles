@@ -4,11 +4,14 @@ import ProductCard from '../home/product-card';
 import { TProductSchema } from '@/lib/types';
 
 type RelatedProductsProps = {
-    Products: TProductSchema[];
+    Products?: TProductSchema[];
     title: string;
 }
 
 const RelatedProducts = ({ Products, title }: RelatedProductsProps) => {
+    if(!Products){
+        return <p>!NO related products found</p>
+    }
     return (
         <div className="container2 pt-10 mt-10 text-center ">
             <div className=" px-10 relative">

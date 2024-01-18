@@ -1,34 +1,69 @@
-import React from 'react';
+'use client'
+import React, { useState } from 'react';
 import CustomInput from '../shared/custom-input';
+import { FormProvider, useForm } from 'react-hook-form';
+import { RxCross2 } from "react-icons/rx";
+import { buttonStyles } from '../shared/custom-button';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { AddressSchema, TAddressForm } from '@/lib/types';
+import { createAddress } from '@/actions/account/address';
+import Cookies from 'js-cookie';
+import toast, { Toaster } from 'react-hot-toast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-type AdressFormProps = {
-    setstep: React.Dispatch<React.SetStateAction<number>>
+type AddressFormProps = {
+  setshowAddressForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddressForm = ({setstep}:AdressFormProps) => {
-    return (
-        <div >
-            <div className="">
-                <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
-                <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive the order.</p>
+const AddressForm = ({ setshowAddressForm }: AddressFormProps) => {
+  const methods = useForm<TAddressForm>({
+    resolver: zodResolver(AddressSchema),
+  });
+  const { formState: { errors } } = methods
+  const queryClient = useQueryClient();
 
-                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <CustomInput label='First Name' name='firstName' type='text' placeholder='First Name' />
-                    <CustomInput label='Last Name' type='text' name='lastName' placeholder='Last Name' />
-                    <CustomInput label='Email' type='email' name='email' placeholder='Email' />
-                    <CustomInput label='Phone Number' type='text' name='phone' placeholder='Phone Number' />
-                    <CustomInput label='Street Address' type='text' name='address' placeholder='Address' span='sm:col-span-6' />
-                    <CustomInput label='City' type='text' name='city' placeholder='City' span='sm:col-span-2' />
-                    <CustomInput label='State' type='text' name='state' placeholder='State' span='sm:col-span-2' />
-                    <CustomInput label='Zip Code' type='text' name='zip' placeholder='Zip Code' span='sm:col-span-2' />
-                </div>
-                <div className=" flex mt-10 max-sm:flex-col justify-between gap-4 sm:items-center">
-                    <button onClick={() => setstep(1)} className="hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 px-10  bg-gray-800 text-base font-medium leading-4 text-white">Back to Cart</button>
-                    <button onClick={() => setstep(3)} className="hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 px-10  bg-gray-800 text-base font-medium leading-4 text-white">Continue to Payment</button>
-                </div>
-            </div>
+  const mutation = useMutation({
+    mutationFn: (data: TAddressForm) => {
+      const accountId = Cookies.get('at') || "";
+      return createAddress(accountId, data);
+    },
+    onSuccess: () => {
+      toast.success("Address added successfully!");
+      queryClient.invalidateQueries({ queryKey: ['address'] });
+      setshowAddressForm(false);
+    },
+  });
+
+  const onSubmit = (data: TAddressForm) => {
+    mutation.mutate(data);
+  }
+
+
+  return (
+    <FormProvider {...methods}>
+      <Toaster />
+      <div className='w-screen h-screen fixed inset-0 z-50 flex justify-center items-center bg-gray-500 bg-opacity-50'>
+        <div className=" bg-white rounded w-1/3 h-[85%] drop-shadow p-2 ">
+          <div className='p-4 bg-white sticky inset-0 flex h-fit w-full justify-between'>
+            <span className='font-semibold z-50 h-fit text-gray-600'>ADD NEW ADDRESS</span>
+            <RxCross2 className="w-6 cursor-pointer h-auto" onClick={() => setshowAddressForm(false)} />
+          </div>
+          <div className='h-[90%] overflow-scroll relative'>
+            <form onSubmit={methods.handleSubmit(onSubmit)} className='grid pt-2 grid-cols-1 gap-x-6 gap-y-8 min-h-full px-2 sm:grid-cols-6 w-full'>
+              <CustomInput error={errors.name?.message} label="Name" type="text" name="name" placeholder="Name" span="sm:col-span-6" />
+              <CustomInput error={errors.email?.message} label="Email" type="email" name="email" placeholder="Email" span="sm:col-span-6" />
+              <CustomInput error={errors.phone?.message} label="Phone Number" type="text" name="phone" placeholder="Phone Number" span="sm:col-span-6" />
+              <CustomInput error={errors.street?.message} label="Street Address" type="text" name="street" placeholder="Address" span="sm:col-span-6" />
+              <CustomInput error={errors.city?.message} label="City" type="text" name="city" placeholder="City" span="sm:col-span-6" />
+              <CustomInput error={errors.state?.message} label="State" type="text" name="state" placeholder="State" span="sm:col-span-6" />
+              <CustomInput error={errors.pin?.message} label="Pin Code" type="text" name="pin" placeholder="Pin Code" span="sm:col-span-6" />
+              <input disabled={mutation.isPending} type='submit' className={`${buttonStyles.base} ${buttonStyles.large} col-span-6 sticky bottom-0 disabled:bg-gray-500`} placeholder='ADD ADDRESS' value={mutation.isPending ? 'ADDING...' : 'ADD ADDRESS'} />
+            </form>
+          </div>
         </div>
-    );
+      </div>
+    </FormProvider>
+  );
 };
 
 export default AddressForm;

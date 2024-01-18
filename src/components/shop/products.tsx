@@ -7,19 +7,16 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { getAllProducts } from '@/actions/product/get-products';
 import { TProductSchema } from '@/lib/types';
-import {ProductCardSkeleton} from '../shared/skeleton';
+import { ProductCardSkeleton } from '../shared/skeleton';
+import { useQuery } from '@tanstack/react-query';
 
 const Products = () => {
     const [gridCols, setgridCols] = useState(3);
     const [sortingOrder, setsortingOrder] = useState(1);
-    const [products, setproducts] = useState<TProductSchema[]>([])
-    const [loading, setLoading] = useState(true); // Loading state
-    useEffect(() => {
-        getAllProducts().then(data => {
-            setproducts(data)
-            setLoading(false);
-        })
-    }, [])
+    const { data: products, isLoading, isError } = useQuery<TProductSchema[]>({
+        queryKey: ['products'],
+        queryFn: () => getAllProducts(),
+    });
 
     return (
         <div className='w-[80%] '>
@@ -46,14 +43,14 @@ const Products = () => {
                 <div className='text-sm text-gray-500'>Showing 1-9 of 26</div>
             </div>
             <div className={`grid gap-8 ${gridCols == 1 ? "grid-cols-1" : gridCols == 3 ? "grid-cols-3" : "grid-cols-4"}`}>
-                {loading ? (
+                {isLoading ? (
                     // Render loading skeleton
                     Array.from({ length: 3 }).map((_, index) => (
                         <ProductCardSkeleton key={index} />
                     ))
                 ) : (
                     // Render actual product list
-                    products.map((product) => (
+                    products?.map((product) => (
                         <div key={product.name}>
                             <ProductCard product={product} />
                         </div>

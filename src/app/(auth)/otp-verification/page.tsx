@@ -1,31 +1,43 @@
 'use client'
 import { verifyOtp } from '@/actions/auth/verify-otp';
-import { redirect, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useState } from 'react';
-import cookie from 'js-cookie';
+import cookies from 'js-cookie';
+import { decodeUrl } from '@/utils/url-parse';
+import { Pages } from '@/constants/page.constant';
 
 const OtpVerification = () => {
-  const   Router = useRouter();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const userId = searchParams.get("id");
   const [otp, setOtp] = useState("");
+  const [verifying, setverifying] = useState(false)
   if (!email || !userId) {
-    return redirect("/login");
+    router.push(Pages.Login)
   }
 
-  const onSubmit = async () => {
-    const response = await verifyOtp(otp, email);
-    if (response.status === 200) {
-      cookie.set('sessionToken', response.sessionToken, {
-        expires: 1, // Set an appropriate expiration time
-        secure: true, // Ensures the cookie is only sent over HTTPS
-        httpOnly: true, // Helps protect against XSS attacks
-        sameSite: 'Strict', // Provides some protection against CSRF attacks
-        path: '/', // Specify the path where the cookie is valid
-      });
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setverifying(true)
+    try {
+      const response = await verifyOtp(otp, decodeUrl(email || ""));
+      if (response.status === 200) {
+        localStorage.setItem('user', JSON.stringify(response.user))
+        cookies.set('sessionToken', response.sessionToken.toString(), {
+          expires: 7, // Set an appropriate expiration time
+          // secure: true, // Ensures the cookie is only sent over HTTPS
+          // httpOnly: true, // Helps protect against XSS attacks
+          sameSite: 'Strict', // Provides some protection against CSRF attacks
+        });
+        setverifying(false)
+        router.push(Pages.Home)
+      } else {
+        console.log(response.message)
+      }
+    } catch (error) {
+      console.log(error)
     }
-    Router.push("/");
   };
 
   return (
@@ -43,7 +55,7 @@ const OtpVerification = () => {
                 </p>
               </div>
               <form
-                onSubmit={onSubmit}
+                onSubmit={(e) => onSubmit(e)}
                 className="px-8 pt-6 pb-8 mb-4 bg-white rounded"
               >
                 <div className="mb-8">
@@ -63,10 +75,11 @@ const OtpVerification = () => {
                 </div>
                 <div className="mb-6 text-center">
                   <button
-                    className="w-full px-4 py-2 font-bold text-white bg-red-500 rounded-full hover:bg-red-700 focus:outline-none focus:shadow-outline"
+                    disabled={verifying}
+                    className="w-full px-4 py-2 disabled:bg-gray-400 font-bold text-white bg-red-500 rounded-full hover:bg-red-700 focus:outline-none focus:shadow-outline"
                     type="submit"
                   >
-                    Verify
+                    {verifying ? "Verifying..." : "Verify"}
                   </button>
                 </div>
               </form>

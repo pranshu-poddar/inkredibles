@@ -18,3 +18,14 @@ export const HomeAssets = {
   MenBanber: "/images/home/banner/banner4.webp",
   SpecialBanner: "/images/home/banner/banner3.webp",
 };
+
+
+export const AccountAssets = {
+  Account:"/images/account/account.png",
+  Address:"/images/account/address.png",
+  Credit:"/images/account/credit.png",
+  Dashboard:"/images/account/dashboard.png",
+  EditAccount:"/images/account/edit-account.png",
+  Favorites:"/images/account/faviortes.png",
+  Product:"/images/account/product.png",
+}

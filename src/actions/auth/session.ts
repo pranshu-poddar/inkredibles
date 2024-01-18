@@ -8,7 +8,7 @@ export const createSession = async (userId: string): Promise<string> => {
 
   // Calculate expiration date
   const expires = new Date();
-  expires.setDate(expires.getDate() + 1);
+  expires.setDate(expires.getDate() + 3);
 
   await prisma.session.create({
     data: {
@@ -19,4 +19,40 @@ export const createSession = async (userId: string): Promise<string> => {
   });
 
   return sessionToken;
+};
+
+export const getSession = async (sessionToken: string) => {
+  const session = await prisma.session.findUnique({
+    where: {
+      sessionToken,
+    }, include: {
+      user: true, 
+    },
+  });
+
+  return session;
+};
+
+export const updateSessionExpiry = async (sessionId: string) => {
+  // Calculate new expiration date (e.g., extend by 3 more days)
+  const newExpires = new Date();
+  newExpires.setDate(newExpires.getDate() + 3);
+
+  // Update session expiry in the database
+  await prisma.session.update({
+    where: {
+      id: sessionId,
+    },
+    data: {
+      expires: newExpires,
+    },
+  });
+};
+
+export const deleteSession = async (sessionToken: string) => {
+  await prisma.session.delete({
+    where: {
+      sessionToken,
+    },
+  });
 };

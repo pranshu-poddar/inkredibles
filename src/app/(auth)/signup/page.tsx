@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TSignupSchema, signupSchema } from "@/lib/types";
 import { Register } from "@/actions/auth/register";
 import { useRouter } from "next/navigation";
+import { encodeUrl } from "@/utils/url-parse";
 
 const SignUp = () => {
   const Router = useRouter();
@@ -22,7 +23,7 @@ const SignUp = () => {
     if (response.status == 200 && response.user) {
       Router.push(
         "/otp-verification?email=" +
-          encodeURIComponent(data.email) +
+          encodeUrl(data.email) +
           "&id=" +response.user.id,
       );
       reset();

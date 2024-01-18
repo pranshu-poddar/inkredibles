@@ -2,6 +2,7 @@
 import { SignIn } from "@/actions/auth/login";
 /* eslint-disable @next/next/no-img-element */
 import { TLoginSchema, loginSchema } from "@/lib/types";
+import { encodeUrl } from "@/utils/url-parse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -23,7 +24,7 @@ const Login = () => {
     if (response.status == 200 && response.user) {
       Router.push(
         "/otp-verification?email=" +
-        encodeURIComponent(data.email) +
+        encodeUrl(data.email) +
         "&id=" + response.user.id,
       );
       reset();

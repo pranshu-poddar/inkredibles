@@ -6,12 +6,12 @@ import { IoIosArrowUp } from "react-icons/io";
 const SearchBar = () => {
   const [showCategories, setshowCategories] = useState(false);
   return (
-    <div className=" bg-gray-100 relative rounded-full max-w-xl flex items-center w-full shadow-sm border border-gray-200">
+    <div className=" bg-gray-100 h-12 relative rounded-full max-w-xl flex items-center w-full shadow-sm border border-gray-200">
       <small
         onClick={() => setshowCategories(!showCategories)}
         className="flex border-r cursor-pointer h-full px-4 items-center min-w-max gap-2"
       >
-        All Categories<IoIosArrowUp className={showCategories?"rotate-0 transition-all duration-150 ease-linear":"rotate-180 transition-all duration-150 ease-linear"}/>
+        All Categories<IoIosArrowUp className={showCategories ? "rotate-0 transition-all duration-150 ease-linear" : "rotate-180 transition-all duration-150 ease-linear"} />
       </small>
       {showCategories && (
         <ul className="absolute left-2 h-32 overflow-y-auto overflow-x-hidden w-max border rounded-md bg-white top-[110%] z-50">

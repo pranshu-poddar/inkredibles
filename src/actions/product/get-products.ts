@@ -10,7 +10,6 @@ export const getAllProducts = async () => {
         productDetails: true, // Include the associated productDetails
       },
     });
-
     return products;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -22,7 +21,20 @@ export const getAllProducts = async () => {
 export const getProductById = async (productId: string) => {
   try {
     const product = await prisma.product.findUnique({
-      where: { name: productId },
+      where: { id: productId },
+    });
+
+    return product;
+  } catch (error) {
+    console.error("Error fetching product by ID:", error);
+    throw new Error("Error fetching product by ID");
+  }
+};
+
+export const getProductByName = async (name: string) => {
+  try {
+    const product = await prisma.product.findUnique({
+      where: { name: name },
       include: {
         productDetails: true, // Include the associated productDetails
       },
@@ -30,8 +42,8 @@ export const getProductById = async (productId: string) => {
 
     return product;
   } catch (error) {
-    console.error("Error fetching product by ID:", error);
-    throw new Error("Error fetching product by ID");
+    console.error("Error fetching product by Name:", error);
+    throw new Error("Error fetching product by Name");
   }
 };
 

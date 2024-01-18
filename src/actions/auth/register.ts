@@ -6,7 +6,6 @@ import { generateOTP } from "@/utils/generate-otp";
 import { sendOTP } from "./send-otp";
 
 export const Register = async (data: TSignupSchema) => {
-  
   // Validate the incoming data
   const validationResult = signupSchema.safeParse(data);
   if (!validationResult.success) {
@@ -45,6 +44,12 @@ export const Register = async (data: TSignupSchema) => {
       },
     });
 
+    // Create account with default values
+    await prisma.account.create({
+      data: {
+        userId: newUser.id
+      },
+    });
     // Prepare email content
     const emailContent = `Your verification code is: ${OTP}`;
 

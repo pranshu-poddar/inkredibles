@@ -1,5 +1,5 @@
 import { ProductCategory } from "@/constants/data.constant";
-import { ZodType, z } from "zod";
+import { z } from "zod";
 
 export const loginSchema = z.object({
   email: z
@@ -83,6 +83,8 @@ export const ProductSchema = z.object({
     .min(0, { message: "Discount can't be negative" })
     .max(100, { message: "Discount must be less than or equal to 100" }),
   updatedAt: z.date().optional(),
+  createdAt: z.date().optional(),
+  id: z.string().optional(),
   productDetails: z
     .array(ProductDetailSchema)
     .min(1, { message: "At least one product detail is required" }),
@@ -96,3 +98,46 @@ export type ImageType = {
   thumb: string;
   deleteUrl: string;
 };
+
+// **CartItem Schema**
+export const CartItemSchema = z.object({
+  productId: z.string(), // Assuming product IDs are UUIDs
+  color: z.string().min(1),
+  size: z.string().min(1),
+  quantity: z.number().int().min(1),
+});
+
+export type TCartItem = z.infer<typeof CartItemSchema>;
+
+// **Cart Schema**
+export const CartSchema = z.object({
+  items: z.array(CartItemSchema),
+  addItem: z.function(z.tuple([CartItemSchema])),
+  removeItem:  z.function(z.tuple([CartItemSchema])),
+  updateQuantity:  z.function(z.tuple([CartItemSchema])),
+  clearCart: z.function(),
+});
+
+export type TCart = z.infer<typeof CartSchema>;
+
+export const AddressSchema = z.object({
+  id: z.string().optional(),
+  name: z.string().min(1,{message:"Recipient's name"}),
+  phone: z
+  .string()
+  .trim()
+  .min(1, "Required")
+  .length(10, "Phone number must be 10 digits"),
+  email: z
+  .string()
+  .min(1, { message: "Required" })
+  .email({ message: "Must be a valid email" })
+  .trim()
+  .toLowerCase(),
+  street: z.string().min(1,{message:'Street address'}),
+  city: z.string().min(1,{message:'City'}),
+  state: z.string().min(1,{message:'State or province'}),
+  pin: z.string().min(1,{message:'Postal code'}).regex(new RegExp('^[0-9]{5,6}$')),
+});
+
+export type TAddressForm = z.infer<typeof AddressSchema>;
