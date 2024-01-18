@@ -2,16 +2,16 @@
 import { getProductById } from '@/actions/product/get-products';
 import CartSection from '@/components/checkout/cart-section';
 import { Pages } from '@/constants/page.constant';
-import { TCartItem } from '@/lib/types';
+import useStore from '@/lib/hooks/use-store';
+import { TCart, TCartItem } from '@/lib/types';
 import { useCartStore } from '@/store/cart-store';
 import { UseQueryResult, useQueries, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { useStore } from 'zustand';
 
 const Page = () => {
     const router = useRouter();
-    const cart:TCartItem[] = useStore(useCartStore, (state) => state.items);
+    const cart:TCartItem[] | undefined = useStore(useCartStore,(state:TCart) => state.items);
     const queryArray = cart?.map((item: TCartItem) => ({
         queryKey: ['cartitems', item.productId],
         queryFn: () => getProductById(item.productId), // Fetch data for each item

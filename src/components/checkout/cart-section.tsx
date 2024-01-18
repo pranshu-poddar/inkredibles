@@ -3,7 +3,7 @@ import CartItem from '../shared/cart-item';
 import { TCartItem } from '@/lib/types';
 
 type CartSectionProps = {
-    cart: TCartItem[]
+    cart: TCartItem[] | undefined
     items: ({
         name: string;
         discount: number;
