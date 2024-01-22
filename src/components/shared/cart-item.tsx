@@ -7,7 +7,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 interface CartItemProps {
     item: TCartItem,
-    setshowCart: React.Dispatch<React.SetStateAction<boolean>>,
+    setshowCart?: React.Dispatch<React.SetStateAction<boolean>>,
     itemInfo: {
         description: string;
         category: string;
@@ -26,7 +26,7 @@ const CartItem = ({ item, itemInfo, setshowCart }: CartItemProps) => {
     const handleRemove = async () => {
         await cart.removeItem(item)
         toast.success('Item removed from cart')
-        if (cart.items.length == 1) {
+        if (cart.items.length == 1 && setshowCart) {
             setshowCart(false)
         }
     }
