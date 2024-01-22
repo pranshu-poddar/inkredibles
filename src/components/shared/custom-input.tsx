@@ -7,7 +7,7 @@ interface CustomInputProps extends Omit<InputHTMLAttributes<HTMLInputElement | H
   placeholder?: string;
   span?: string;
   error?: string;
-  type?: 'text' | 'number' | 'password' | 'email' | 'textarea'; // Add 'textarea' as a possible type
+  type?: 'text' | 'number' | 'password' | 'email' | 'textarea' | 'date'; // Add 'textarea' as a possible type
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -20,7 +20,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   ...inputProps
 }) => {
   const {
-    register
+    register,control
   } = useFormContext();
 
   const isTextarea = type === 'textarea';

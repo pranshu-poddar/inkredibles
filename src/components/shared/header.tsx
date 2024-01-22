@@ -18,20 +18,19 @@ const Header = () => {
   const [showComponent, setShowComponent] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
-  const [sessionToken, setsessionToken] = useState<string>()
-
+  // const [sessionToken, setsessionToken] = useState<string>()
+ const sessionToken = Cookies.get("sessionToken") || "";
   const { data: user, isLoading, isError } = useQuery({
     queryKey: ['user', sessionToken],
     queryFn: async () => {
       const response = await getAccountFromSessionId(sessionToken || "");
       return response;
     },
-    staleTime: 1000 * 60 * 100, // 10 minutes
     enabled: !!sessionToken,
   });
-  
-  const accountData = {role:user?.user.role||"",phone:user?.user.phone||"",name:user?.user.firstName||""}
-  Cookies.set('at',user?.id||"",{
+
+  const accountData = { role: user?.user.role || "", phone: user?.user.phone || "", name: user?.user.firstName || "" }
+  Cookies.set('at', user?.id || "", {
     expires: 7, // Set an appropriate expiration time
     // secure: true, // Ensures the cookie is only sent over HTTPS
     // httpOnly: true, // Helps protect against XSS attacks
@@ -50,7 +49,7 @@ const Header = () => {
 
     // Attach the scroll event listener
     window.addEventListener("scroll", handleScroll);
-    setsessionToken(Cookies.get('sessionToken'))
+    // setsessionToken(Cookies.get('sessionToken'))
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };

@@ -6,9 +6,9 @@ interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'small' | 'large';
 }
 export const buttonStyles = {
-  base: 'hover:bg-black cursor-pointer select-none transition-all hover:rounded-xl hover:shadow-xl duration-300 focus:outline-none bg-gray-800 text-base font-medium leading-4 text-white',
-  large: 'py-5 px-10 ',
-  small: 'py-3 px-6 ',
+  base: 'hover:bg-black cursor-pointer select-none transition-all hover:rounded-xl rounded hover:shadow-xl duration-300 focus:outline-none bg-gray-800 text-sm font-medium leading-4 text-white',
+  large: 'py-3 px-6 ',
+  small: 'py-3 px-4 ',
 };
 const CustomButton: React.FC<CustomButtonProps> = ({ children, size = 'large', ...buttonProps }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);

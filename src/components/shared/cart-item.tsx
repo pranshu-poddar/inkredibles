@@ -3,10 +3,12 @@ import useStore from '@/lib/hooks/use-store';
 import { TCartItem } from '@/lib/types';
 import { useCartStore } from '@/store/cart-store';
 import React from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 interface CartItemProps {
-    item:TCartItem,
-    itemInfo:{
+    item: TCartItem,
+    setshowCart: React.Dispatch<React.SetStateAction<boolean>>,
+    itemInfo: {
         description: string;
         category: string;
         imageUrl: string[];
@@ -19,27 +21,32 @@ interface CartItemProps {
     } | null | undefined
 }
 
-const CartItem = ({item,itemInfo}:CartItemProps) => {
+const CartItem = ({ item, itemInfo, setshowCart }: CartItemProps) => {
     const cart = useCartStore()
-    const handleRemove = ()=>{
-        cart.removeItem(item)
+    const handleRemove = async () => {
+        await cart.removeItem(item)
+        toast.success('Item removed from cart')
+        if (cart.items.length == 1) {
+            setshowCart(false)
+        }
     }
-    
+
     return (
         <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
+            <Toaster />
             <div className="flex w-full space-x-2 sm:space-x-4">
                 <img className="flex-shrink-0 object-cover w-20 h-20 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 " src={itemInfo?.imageUrl[0]} alt="Polaroid camera" />
                 <div className="flex flex-col justify-between w-full pb-4">
                     <div className="flex justify-between w-full pb-2 space-x-2">
                         <div className="space-y-1">
                             <h3 className="text-lg font-semibold leadi sm:pr-8">{itemInfo?.name}</h3>
-                            <p className="text-sm dark:text-gray-400">Color: <span className='text-inkredible-black font-medium capitalize'>{item.color}</span></p>
+                            <p className="text-sm dark:text-gray-400">Color: <span style={{ color: item.color }} className=' font-medium capitalize'>{item.color}</span></p>
                             <p className="text-sm dark:text-gray-400">Size: <span className='text-inkredible-black font-medium capitalize'>{item.size}</span></p>
                             <p className="text-sm dark:text-gray-400">Quantity: <span className='text-inkredible-black font-medium capitalize'>{item.quantity}</span></p>
                         </div>
                         <div className="text-right">
-                        {itemInfo?.discount ?<p className="tracking-wide text-xl font-medium "> ${(100 - itemInfo.discount) / 100 * itemInfo.price}</p>:<p className="tracking-wide text-xl font-medium ">{itemInfo?.price}</p>}
-                        {itemInfo?.discount && <p className="line-through decoration-red-500 decoration-2 mr-2">${itemInfo.price}</p>}
+                            {itemInfo?.discount ? <p className="tracking-wide text-xl font-medium "> ${(100 - itemInfo.discount) / 100 * itemInfo.price}</p> : <p className="tracking-wide text-xl font-medium ">{itemInfo?.price}</p>}
+                            {itemInfo?.discount && <p className="line-through decoration-red-500 decoration-2 mr-2">${itemInfo.price}</p>}
                         </div>
                     </div>
                     <div className="flex text-sm divide-x">

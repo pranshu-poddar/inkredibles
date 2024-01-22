@@ -22,41 +22,33 @@ const Product = ({ params }: { params: { slug: string } }) => {
     queryFn: () => getProductByName(decodeUrl(params.slug)),
   })
   const category = product?.category;
-  console.log(category)
   const { data: relatedProducts } =
     useQuery<TProductSchema[]>({
       queryKey: ["relatedProducts", category],
-      queryFn: ()=>getProductsByCategory(category || ""),
+      queryFn: () => getProductsByCategory(category || ""),
       enabled: !!category,
-    }) ;
+    });
 
   const [selectedProduct, setselectedProduct] = useState({ productId: product?.id || "", color: "", size: "", quantity: 1 })
   const cartStore = useCartStore();
 
   useEffect(() => {
-    setselectedProduct((prev) => ({ ...prev, productId: product?.id || "", color: product?.productDetails[0].color || "", size: product?.productDetails[0].size || "", quantity: 1 }))
+    setselectedProduct((prev) => ({ ...prev, productId: product?.id || "", quantity: 1 }))
   }, [product])
 
-  function handleChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) {
-    const { name, value } = event.target;
-
-    setselectedProduct((prevSelectedProduct) => ({
-      ...prevSelectedProduct,
-      [name]: value, // Update the specific property based on the input name
-    }));
-  }
-
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!selectedProduct.color && !selectedProduct.size) {
-      toast.error("Select Color and Size",{position:"bottom-center"})
-    }else{
+      toast.error("Select a color and size")
+    } else {
       console.log(selectedProduct)
       cartStore.addItem(selectedProduct);
+      toast.success(`${product?.name} Added to Cart`)
     }
   };
 
   return (
     <section className="text-gray-600 body-font overflow-hidden">
+      <Toaster />
       {isLoading ? <ProductSkeleton /> : <div className="container2 px-5 pt-24 mx-auto">
         <Toaster />
         <div className="px-10 mx-auto flex flex-wrap">
@@ -109,27 +101,20 @@ const Product = ({ params }: { params: { slug: string } }) => {
             </div>
             {product?.discount ? <p className="tracking-wide text-xl font-medium "><span className="line-through decoration-red-500 decoration-2 mr-2">${product.price}</span> ${(100 - product.discount) / 100 * product.price}</p> : <p className="tracking-wide text-xl font-medium">${product?.price}</p>}
             <p className="leading-relaxed mt-6">{product?.description}</p>
-            <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-              <div className="flex gap-3">
-                <span >Color</span>
+            <div className="flex my-6 gap-10 items-center pb-5 border-b-2 border-gray-100">
+              <div className="flex items-center gap-3">
+                <span className='font-semibold text-inkredible-black'>Color</span>
                 {product?.productDetails.map((variant) => {
-                  return <button style={{ backgroundColor: `${variant.color}` }} onClick={() => setselectedProduct((prev) => ({ ...prev, color: variant.color }))} value={selectedProduct.color} key={variant.color} className={` rounded-full w-6 h-6 border-gray-300 ${selectedProduct.color == variant.color && "border-2 shadow-xl"}`}></button>
+                  return <button style={{ backgroundColor: `${variant.color}` }} onClick={() => setselectedProduct((prev) => ({ ...prev, color: variant.color }))} value={selectedProduct.color} key={variant.color} className={` rounded-full w-6 h-6 ring-offset-2 ring-black ${selectedProduct.color == variant.color && "shadow-xl ring-2"}`}></button>
                 })}
               </div>
-              <div className="flex ml-6 items-center">
-                <span className="mr-3">Size</span>
-                <div className="relative">
-                  <select defaultValue={selectedProduct.size} onChange={(e) => handleChange(e)} name='size' className="rounded border appearance-none border-gray-300 py-2 outline-none cursor-pointer pl-3 pr-10">
-                    {product?.productDetails.map((variant) => {
-                      return <option key={variant.size} value={variant.size}>{variant.size}</option>
-                    })}
-                  </select>
-                  <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
-                    <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4" viewBox="0 0 24 24">
-                      <path d="M6 9l6 6 6-6"></path>
-                    </svg>
-                  </span>
-                </div>
+              <div className="flex items-center gap-3">
+                <span className='font-semibold text-inkredible-black'>Size</span>
+                {product?.productDetails.map((variant) => {
+                  return <button onClick={() => setselectedProduct((prev) => ({ ...prev, size: variant.size }))} value={selectedProduct.size} key={variant.size} className={` rounded-full w-8 h-8 font-semibold bg-white border  ring-inkredible-black ${selectedProduct.size == variant.size && "shadow-xl ring-2"}`}>
+                    {variant.size}
+                  </button>
+                })}
               </div>
             </div>
             <div className='flex items-center w-full justify-between'>
@@ -139,7 +124,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
             <button onClick={() => setisLiked(prev => !prev)} className='flex text-base group gap-2 items-center mt-8'>{isLiked ? <FaHeart className="w-5 fill-red-500 h-auto" /> : <FaRegHeart className="w-5 group-hover:fill-red-500 transition-all duration-150 ease-out h-auto" />}  Add To Wish List</button>
           </div>
 
-          </div>
+        </div>
 
         {/* <Tabs /> */}
 

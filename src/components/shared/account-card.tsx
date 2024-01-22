@@ -28,6 +28,8 @@ const AccountCard = ({ sessionToken, isOpen, modal, user }: AccountCardProps) =>
             if (sessionToken) {
                 await deleteSession(sessionToken);
                 Cookies.remove("sessionToken");
+                Cookies.remove("at");
+                localStorage.clear()
             }
             setisLoading(false)
             router.push(Pages.Home)

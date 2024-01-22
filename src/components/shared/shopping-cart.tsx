@@ -30,6 +30,7 @@ const ShoppingCart = ({ setshowCart }: shoppingCartProps) => {
         items?.map((item, i) => { return totalAmount += ((100 - (item?.discount || 0)) / 100 * (item?.price|| 0)) * cart[i].quantity })
 
     }
+
     return (
         <div className="flex flex-col w-[30rem] drop-shadow bg-white h-screen p-6 relative space-y-4 sm:p-10 ">
             <h2 className="text-xl font-semibold">Your cart</h2>
@@ -39,7 +40,7 @@ const ShoppingCart = ({ setshowCart }: shoppingCartProps) => {
                 {
                     cart?.map((item, i) => {
                         return <div key={item.productId}>
-                            <CartItem item={item} itemInfo={items[i]} />
+                            <CartItem setshowCart={setshowCart} item={item} itemInfo={items[i]} />
                         </div>
                     })
                 }

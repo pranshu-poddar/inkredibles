@@ -113,31 +113,46 @@ export type TCartItem = z.infer<typeof CartItemSchema>;
 export const CartSchema = z.object({
   items: z.array(CartItemSchema),
   addItem: z.function(z.tuple([CartItemSchema])),
-  removeItem:  z.function(z.tuple([CartItemSchema])),
-  updateQuantity:  z.function(z.tuple([CartItemSchema])),
+  removeItem: z.function(z.tuple([CartItemSchema])),
+  updateQuantity: z.function(z.tuple([CartItemSchema])),
   clearCart: z.function(),
+  syncWithDatabase: z.function(),
 });
 
 export type TCart = z.infer<typeof CartSchema>;
 
 export const AddressSchema = z.object({
   id: z.string().optional(),
-  name: z.string().min(1,{message:"Recipient's name"}),
+  name: z.string().min(1, { message: "Recipient's name" }),
   phone: z
-  .string()
-  .trim()
-  .min(1, "Required")
-  .length(10, "Phone number must be 10 digits"),
+    .string()
+    .trim()
+    .min(1, "Required")
+    .length(10, "Phone number must be 10 digits"),
   email: z
-  .string()
-  .min(1, { message: "Required" })
-  .email({ message: "Must be a valid email" })
-  .trim()
-  .toLowerCase(),
-  street: z.string().min(1,{message:'Street address'}),
-  city: z.string().min(1,{message:'City'}),
-  state: z.string().min(1,{message:'State or province'}),
-  pin: z.string().min(1,{message:'Postal code'}).regex(new RegExp('^[0-9]{5,6}$')),
+    .string()
+    .min(1, { message: "Required" })
+    .email({ message: "Must be a valid email" })
+    .trim()
+    .toLowerCase(),
+  street: z.string().min(1, { message: "Street address" }),
+  city: z.string().min(1, { message: "City" }),
+  state: z.string().min(1, { message: "State or province" }),
+  pin: z
+    .string()
+    .min(1, { message: "Postal code" })
+    .regex(new RegExp("^[0-9]{5,6}$")),
 });
 
 export type TAddressForm = z.infer<typeof AddressSchema>;
+
+export const UserSchema = z.object({
+  firstName: z.string().min(2,{message:"first name"}).max(50), // Adjust min and max length as needed
+  lastName: z.string().min(2,{message:"last name"}).max(50),
+  phone: z.string().regex(/^\+?[0-9]{1,15}$/), // Validate phone number pattern
+  gender: z.string().min(1), // You might want to customize this based on available options
+  email: z.string().email(), // Validate email format
+  DOB: z.date().optional(), // You might want to add more specific date validations here
+});
+
+export type TUser = z.infer<typeof UserSchema>;
