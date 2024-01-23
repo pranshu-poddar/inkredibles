@@ -11,8 +11,10 @@ const OtpVerification = () => {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const userId = searchParams.get("id");
+  const redirect = searchParams.get("redirect");
   const [otp, setOtp] = useState("");
   const [verifying, setverifying] = useState(false)
+
   if (!email || !userId) {
     router.push(Pages.Login)
   }
@@ -32,7 +34,7 @@ const OtpVerification = () => {
           sameSite: 'Strict', // Provides some protection against CSRF attacks
         });
         setverifying(false)
-        router.push(Pages.Home)
+        router.push(redirect || Pages.Home)
       } else {
         console.log(response.message)
       }

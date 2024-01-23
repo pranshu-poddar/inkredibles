@@ -6,7 +6,7 @@ import CustomInput from "@/components/shared/custom-input";
 import { TLoginSchema, loginSchema } from "@/lib/types";
 import { encodeUrl } from "@/utils/url-parse";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
@@ -21,14 +21,15 @@ const Login = () => {
     formState: { errors, isSubmitting },
     reset,
   } = methods
-
+  const query = useSearchParams();
   const onSubmit = async (data: TLoginSchema) => {
     const response = await SignIn(data);
+
     if (response.status == 200 && response.user) {
       Router.push(
         "/otp-verification?email=" +
         encodeUrl(data.email) +
-        "&id=" + response.user.id,
+        "&id=" + response.user.id + "&redirect=" + encodeURIComponent(query.get("redirect") || "/"),
       );
       reset();
     }
@@ -41,7 +42,7 @@ const Login = () => {
             <div className="w-full h-auto bg-[url('https://source.unsplash.com/K4mSJ7kc0As/600x800')] bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"></div>
 
             <div className="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
-              <h3 className="pt-4 text-2xl text-center">Welcome Back!</h3>
+              <h3 className="pt-4 text-2xl text-center">Login or Signup</h3>
               <FormProvider {...methods}>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
@@ -60,7 +61,7 @@ const Login = () => {
                     </div>
                   </div>
                   <div className="mb-6 text-center">
-                    <CustomButton style={{width:"100%"}} size="small" type="submit" disabled={isSubmitting}>
+                    <CustomButton style={{ width: "100%" }} size="small" type="submit" disabled={isSubmitting}>
                       {isSubmitting ? "Signing..." : "Sign In"}
                     </CustomButton>
                   </div>

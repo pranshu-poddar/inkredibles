@@ -6,6 +6,7 @@ export const encodeUrl = (url:string) =>{
   const processed = encoded
     .replace(/%3A/g, "-") // Replace colons with hyphens (optional)
     .replace(/%20/g, "-") // Replace spaces with hyphens (optional)
+    .replace(/%2F/g, "//") // Replace slashes with hyphens (optional)
     // Add more replacements as needed, ensuring consistency
 
   return processed;

@@ -6,7 +6,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TSignupSchema, signupSchema } from "@/lib/types";
 import { Register } from "@/actions/auth/register";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { encodeUrl } from "@/utils/url-parse";
 import CustomInput from "@/components/shared/custom-input";
 import CustomButton from "@/components/shared/custom-button";
@@ -21,13 +21,14 @@ const SignUp = () => {
     reset,
     formState: { isSubmitting, errors },
   } = methods;
+  const query = useSearchParams();
   const onSubmit = async (data: TSignupSchema) => {
     const response = await Register(data);
     if (response.status == 200 && response.user) {
       Router.push(
         "/otp-verification?email=" +
         encodeUrl(data.email) +
-        "&id=" + response.user.id,
+        "&id=" + response.user.id + "&redirect=" + encodeURIComponent(query.get("redirect") || "/"),
       );
       reset();
     } else {

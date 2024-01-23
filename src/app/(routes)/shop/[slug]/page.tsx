@@ -37,7 +37,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
   }, [product])
 
   const handleAddToCart = async () => {
-    if (!selectedProduct.color && !selectedProduct.size) {
+    if (!selectedProduct.color || !selectedProduct.size) {
       toast.error("Select a color and size")
     } else {
       console.log(selectedProduct)
