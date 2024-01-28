@@ -5,9 +5,13 @@ import useAddressStore from '@/store/address-store';
 import { useCartStore } from '@/store/cart-store';
 import { useQueries } from '@tanstack/react-query';
 import { usePathname, useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useStore } from 'zustand';
+import useRazorpay from "react-razorpay";
+import { CommonAssets } from '@/constants/assets.constant';
+import { Pages } from '@/constants/page.constant';
+
 
 const shippingCharges = 89;
 
@@ -16,12 +20,13 @@ const OrderSummary = () => {
     const pathName = usePathname();
     const step = pathName == '/checkout/cart' ? 1 : pathName == '/checkout/address' ? 2 : 3;
     const cart = useStore(useCartStore, (state) => state.items);
+    const user = localStorage.getItem('user')? JSON.parse(localStorage.getItem('user') || '') : {}
     const selectedAddress = useStore(useAddressStore, (state) => state.selectedAddress)
     const queryArray = cart?.map((item: TCartItem) => ({
         queryKey: ['cartitems', item.productId],
         queryFn: () => getProductById(item.productId), // Fetch data for each item
     }))
-
+    const [Razorpay] = useRazorpay();
     const cartItems = useQueries({ queries: queryArray ?? [] });
     const items = cartItems.map((item) => item.data)
     let totalAmount: number = 0;
@@ -32,6 +37,55 @@ const OrderSummary = () => {
     }
     let discount: number = (subTotal - totalAmount) / subTotal * 100;
 
+    const [paymentLoading, setPaymentLoading] = useState(false);
+
+
+    const handlePayment = async () => {
+        setPaymentLoading(true);
+
+        const response = await fetch("/api/payment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                amount: totalAmount + shippingCharges,
+                currency: "INR",
+            }),
+        });
+
+        const { id } = await response.json();
+
+        const options = {
+            key: process.env.NEXT_PUBLIC_RAZORPAY_KEY || "",
+            amount: ((totalAmount + shippingCharges) * 100).toString(),
+            currency: "INR",
+            name: "Inkredible",
+            description: "Payment for Purchase",
+            image: "/image.png",
+            order_id: id,
+            handler: function (response: any) {
+                console.log(response);
+                setPaymentLoading(false);
+                router.push(Pages.OrderSummary)
+            },
+            prefill: {
+                name: user.name,
+                email: user.email,
+                contact: user.phone,
+            },
+            theme: {
+                color: "#528FF0",
+            },
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.on("payment.failed", function (response: { error: { code: any; description: any; source: any; step: any; reason: any; metadata: { order_id: any; payment_id: any; }; }; }) {
+            toast.error(response.error.description);
+        });
+        rzp.open();
+    };
+
     const handleNavigate = () => {
         if (step == 1) {
             router.push("/checkout/address")
@@ -39,7 +93,7 @@ const OrderSummary = () => {
             if (!selectedAddress) {
                 toast.error("select a billing address")
             }
-            else router.push("/checkout/payment")
+            else handlePayment()
         }
     }
     return (
@@ -65,9 +119,9 @@ const OrderSummary = () => {
                     <p className="text-base  font-semibold leading-4 text-inkredible-black">Total Amount</p>
                     <p className="text-base  font-semibold leading-4 text-gray-600">₹{totalAmount + shippingCharges}</p>
                 </div>
-                </div>
+            </div>
             <div className="w-full flex justify-center items-center">
-                <button onClick={handleNavigate} className="hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white">{step == 1 ? "Place Order" : "Continue to payment"}</button>
+                <button onClick={handleNavigate} className="hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white">{step == 1 ? "Continue to payment" : paymentLoading ? 'Processing...' : 'Pay Now'}</button>
             </div>
         </div>
     );

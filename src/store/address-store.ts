@@ -1,7 +1,7 @@
 // addressStore.js
 import { TAddressForm } from '@/lib/types';
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface AddressStore {
   selectedAddress: TAddressForm | null;
@@ -18,7 +18,7 @@ const useAddressStore = create(
     }),
     {
       name: 'address-store', // a unique name for the persisted store
-      getStorage: () => localStorage, // optional, defaults to localStorage
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

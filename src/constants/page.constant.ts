@@ -14,6 +14,8 @@ const PublicPages = {
   Overview:"/user",
   Wishlist:"/user/wishlist",
   EditProfile:"/user/profile/edit",
+  OrderDetails:"/user/orders/order-details",
+  OrderSummary:"/user/orders/order-summary",
 };
 
 const ProtectedPages = {

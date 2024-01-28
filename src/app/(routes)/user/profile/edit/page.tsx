@@ -77,7 +77,7 @@ const Page = () => {
                 <option value="female">Female</option>
               </select>
             </div>
-            <CustomInput error={errors.DOB?.message} label="D.O.B" type="date" name="DOB" placeholder="D.B.O" span="sm:col-span-6" />
+            <CustomInput  error={errors.DOB?.message} label="D.O.B" type="date" name="DOB" placeholder="D.B.O" span="sm:col-span-6" />
             <input disabled={mutation.isPending} type='submit' className={`${buttonStyles.base} ${buttonStyles.large} col-span-6 sticky bottom-0 disabled:bg-gray-500`} placeholder='ADD ADDRESS' value={mutation.isPending ? 'UPDATING...' : 'UPDATE PROFILE'} />
           </form>
         </div>

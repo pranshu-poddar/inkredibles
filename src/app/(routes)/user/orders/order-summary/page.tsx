@@ -11,13 +11,13 @@ const Page = () => {
                     <div className="flex border-b border-gray-200   items-stretch justify-start w-full h-full px-4 mb-8 md:flex-row xl:flex-col md:space-x-6 lg:space-x-8 xl:space-x-0">
                         <div className="flex items-start justify-start flex-shrink-0">
                             <div className="flex items-center justify-center w-full pb-6 space-x-4 md:justify-start">
-                                <img src="https://i.postimg.cc/RhQYkKYk/pexels-italo-melo-2379005.jpg" className="object-cover w-16 h-16 rounded-md" alt="avatar"/>
-                                    <div className="flex flex-col items-start justify-start space-y-2">
-                                        <p className="text-lg font-semibold leading-4 text-left text-gray-800 ">
-                                            Rahul Sharma</p>
-                                        <p className="text-sm leading-4 text-gray-600 ">16 Previous Orders</p>
-                                        <p className="text-sm leading-4 cursor-pointer ">rahul@gmail.com</p>
-                                    </div>
+                                <img src="https://i.postimg.cc/RhQYkKYk/pexels-italo-melo-2379005.jpg" className="object-cover w-16 h-16 rounded-md" alt="avatar" />
+                                <div className="flex flex-col items-start justify-start space-y-2">
+                                    <p className="text-lg font-semibold leading-4 text-left text-gray-800 ">
+                                        Rahul Sharma</p>
+                                    <p className="text-sm leading-4 text-gray-600 ">16 Previous Orders</p>
+                                    <p className="text-sm leading-4 cursor-pointer ">rahul@gmail.com</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@ const Page = () => {
                                         </div>
                                         <div className="flex flex-col items-center justify-start">
                                             <p className="text-lg font-semibold leading-6 text-gray-800 ">
-                                                Delivery<br/><span className="text-sm font-normal">Delivery with 24 Hours</span>
+                                                Delivery<br /><span className="text-sm font-normal">Delivery with 24 Hours</span>
                                             </p>
                                         </div>
                                     </div>

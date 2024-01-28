@@ -12,6 +12,8 @@ import AccountCard from "./account-card";
 import { usePathname } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getAccountFromSessionId } from "@/actions/account/get-accounts";
+import useStore from "@/lib/hooks/use-store";
+import { useCartStore } from "@/store/cart-store";
 
 const Header = () => {
   const pathName = usePathname();
@@ -19,15 +21,17 @@ const Header = () => {
   const [showCart, setShowCart] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
   // const [sessionToken, setsessionToken] = useState<string>()
- const sessionToken = Cookies.get("sessionToken") || "";
+  const sessionToken = Cookies.get("sessionToken") || "";
   const { data: user, isLoading, isError } = useQuery({
     queryKey: ['user', sessionToken],
     queryFn: async () => {
       const response = await getAccountFromSessionId(sessionToken || "");
       return response;
     },
-    enabled: !!sessionToken,
+
   });
+
+  const cart = useStore(useCartStore, (state) => state.items);
 
   const accountData = { role: user?.user.role || "", phone: user?.user.phone || "", name: user?.user.firstName || "" }
   Cookies.set('at', user?.id || "", {
@@ -118,9 +122,10 @@ const Header = () => {
               <IoHeartOutline className="w-5 mx-auto text-gray-600 h-auto" />
               <small className="text-xs font-semibold text-inkredible-black tracking-wide">Wishlist</small>
             </div>
-            <div onClick={() => setShowCart(!showCart)} className="cursor-pointer">
+            <div onClick={() => setShowCart(!showCart)} className="cursor-pointer relative">
               <IoBagOutline className="w-5 mx-auto text-gray-600 h-auto" />
               <small className="text-xs font-semibold text-inkredible-black tracking-wide">Bag</small>
+              <p className="text-white absolute -right-3 -top-3 border rounded-full w-5 drop-shadow font-mono flex items-center justify-center bg-red-500 h-5">{cart?.length}</p>
             </div>
           </div>
         </div>

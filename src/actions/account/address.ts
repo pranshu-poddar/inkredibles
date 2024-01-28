@@ -51,6 +51,7 @@ export async function createAddress(accountId: string, data: TAddressForm) {
   }
 
  export async function getAddressesByAccount(accountId: string) {
+  if(accountId === '') return []
     try {
       const addresses = await prisma.address.findMany({
         where: { accountId: accountId },

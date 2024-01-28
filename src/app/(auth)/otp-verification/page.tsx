@@ -28,7 +28,7 @@ const OtpVerification = () => {
         localStorage.setItem('user', JSON.stringify(response.user))
         cookies.set('sessionToken', response.sessionToken.toString(), {
           expires: 7, // Set an appropriate expiration time
-          path:"/",
+          path: "/",
           // secure: true, // Ensures the cookie is only sent over HTTPS
           // httpOnly: true, // Helps protect against XSS attacks
           sameSite: 'Strict', // Provides some protection against CSRF attacks

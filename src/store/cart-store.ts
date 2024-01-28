@@ -1,7 +1,7 @@
 import { saveCartToMongoDB } from "@/actions/account/save-cart";
 import { TCart, TCartItem } from "@/lib/types";
 import { create } from "zustand";
-import { createJSONStorage, persist } from 'zustand/middleware'
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export const useCartStore = create(
   persist<TCart>(
@@ -19,9 +19,11 @@ export const useCartStore = create(
 
           const updatedItems = existingItem
             ? state.items.map((item) =>
-                item.productId === cartItem.productId
+                item.productId === cartItem.productId &&
+                item.color === cartItem.color &&
+                item.size === cartItem.size
                   ? { ...item, quantity: item.quantity + cartItem.quantity }
-                  : item
+                  : item,
               )
             : [
                 ...state.items,
@@ -82,7 +84,7 @@ export const useCartStore = create(
           const cartState = get();
           await saveCartToMongoDB(cartState.items);
         } catch (error) {
-          console.error('Error syncing cart with the database:', error);
+          console.error("Error syncing cart with the database:", error);
         }
       },
     }),
@@ -95,12 +97,12 @@ export const useCartStore = create(
 
 // Add an event listener to save the cart when the user leaves the page (only in the browser environment)
 if (typeof window !== "undefined") {
-  window.addEventListener('beforeunload', async () => {
+  window.addEventListener("beforeunload", async () => {
     try {
       // Call the syncWithDatabase function to update the database with the local storage cart
       await useCartStore.getState().syncWithDatabase();
     } catch (error) {
-      console.error('Error syncing cart with the database:', error);
+      console.error("Error syncing cart with the database:", error);
     }
   });
 }
