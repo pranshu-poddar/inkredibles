@@ -67,6 +67,7 @@ const OrderSummary = () => {
             image: "/image.png",
             order_id: order.id,
             handler: async function (response: any) {
+                useCartStore.getState().clearCart();
                 const res = await createOrder({ orderId: order.id, accountId: user.id, totalAmount: totalAmount + shippingCharges, addressId: selectedAddress?.id, items: cart })
                 console.log(res);
                 setPaymentLoading(false);
