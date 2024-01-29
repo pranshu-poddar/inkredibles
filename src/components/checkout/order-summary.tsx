@@ -9,8 +9,8 @@ import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useStore } from 'zustand';
 import useRazorpay from "react-razorpay";
-import { CommonAssets } from '@/constants/assets.constant';
 import { Pages } from '@/constants/page.constant';
+import { createOrder } from '@/actions/order/create-order';
 
 
 const shippingCharges = 89;
@@ -20,7 +20,10 @@ const OrderSummary = () => {
     const pathName = usePathname();
     const step = pathName == '/checkout/cart' ? 1 : pathName == '/checkout/address' ? 2 : 3;
     const cart = useStore(useCartStore, (state) => state.items);
-    const user = localStorage.getItem('user')? JSON.parse(localStorage.getItem('user') || '') : {}
+    const user =
+        typeof window !== 'undefined' && window.localStorage
+            ? JSON.parse(localStorage.getItem('user') || '')
+            : {};
     const selectedAddress = useStore(useAddressStore, (state) => state.selectedAddress)
     const queryArray = cart?.map((item: TCartItem) => ({
         queryKey: ['cartitems', item.productId],
@@ -39,7 +42,6 @@ const OrderSummary = () => {
 
     const [paymentLoading, setPaymentLoading] = useState(false);
 
-
     const handlePayment = async () => {
         setPaymentLoading(true);
 
@@ -54,7 +56,7 @@ const OrderSummary = () => {
             }),
         });
 
-        const { id } = await response.json();
+        const { order } = await response.json();
 
         const options = {
             key: process.env.NEXT_PUBLIC_RAZORPAY_KEY || "",
@@ -63,17 +65,19 @@ const OrderSummary = () => {
             name: "Inkredible",
             description: "Payment for Purchase",
             image: "/image.png",
-            order_id: id,
-            handler: function (response: any) {
-                console.log(response);
+            order_id: order.id,
+            handler: async function (response: any) {
+                const res = await createOrder({ orderId: order.id, accountId: user.id, totalAmount: totalAmount + shippingCharges, addressId: selectedAddress?.id, items: cart })
+                console.log(res);
                 setPaymentLoading(false);
-                router.push(Pages.OrderSummary)
+                router.push(Pages.OrderSummary + "?orderId=" + order.id);
             },
             prefill: {
                 name: user.name,
                 email: user.email,
                 contact: user.phone,
             },
+            notes: { address: user.address },
             theme: {
                 color: "#528FF0",
             },

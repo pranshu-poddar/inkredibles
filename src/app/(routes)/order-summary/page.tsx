@@ -1,9 +1,21 @@
+'use client'
+import { TUser } from '@/lib/types';
 /* eslint-disable @next/next/no-img-element */
-import React from 'react';
+import { useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 const Page = () => {
+    const query = useSearchParams();
+    const [user, setuser] = useState<TUser | undefined>(undefined)
+    const orderId = query.get('orderId');
+    useEffect(() => {
+        const user = localStorage && JSON.parse(localStorage.getItem('user') || "")
+        setuser(user)
+    }, [])
+    
+
     return (
-        <section className="flex items-center bg-gray-100 font-poppins  ">
+        <section className="flex items-center py-10 bg-gray-100 font-poppins  ">
             <div className="justify-center flex-1 max-w-6xl px-4 py-4 mx-auto bg-white border rounded-md   md:py-10 md:px-10">
                 <div>
                     <h1 className="px-4 mb-8 text-2xl font-semibold tracking-wide text-gray-700  ">
@@ -14,9 +26,9 @@ const Page = () => {
                                 <img src="https://i.postimg.cc/RhQYkKYk/pexels-italo-melo-2379005.jpg" className="object-cover w-16 h-16 rounded-md" alt="avatar" />
                                 <div className="flex flex-col items-start justify-start space-y-2">
                                     <p className="text-lg font-semibold leading-4 text-left text-gray-800 ">
-                                        Rahul Sharma</p>
-                                    <p className="text-sm leading-4 text-gray-600 ">16 Previous Orders</p>
-                                    <p className="text-sm leading-4 cursor-pointer ">rahul@gmail.com</p>
+                                        {user?.firstName} {user?.lastName}</p>
+                                    <p className="text-sm leading-4 text-gray-600 ">{user?.phone}</p>
+                                    <p className="text-sm leading-4 cursor-pointer ">{user?.email}</p>
                                 </div>
                             </div>
                         </div>
@@ -26,13 +38,13 @@ const Page = () => {
                             <p className="mb-2 text-sm leading-5 text-gray-600  ">
                                 Order Number: </p>
                             <p className="text-base font-semibold leading-4 text-gray-800 ">
-                                029837614267</p>
+                                {orderId}</p>
                         </div>
                         <div className="w-full px-4 mb-4 md:w-1/4">
                             <p className="mb-2 text-sm leading-5 text-gray-600  ">
                                 Date: </p>
                             <p className="text-base font-semibold leading-4 text-gray-800 ">
-                                March 18, 2022</p>
+                                {new Date().toDateString()}</p>
                         </div>
                         <div className="w-full px-4 mb-4 md:w-1/4">
                             <p className="mb-2 text-sm font-medium leading-5 text-gray-800  ">

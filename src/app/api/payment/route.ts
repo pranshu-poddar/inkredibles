@@ -1,9 +1,9 @@
-import { NextApiRequest } from "next";
 import { getSession } from "@/actions/auth/session";
 import { createRazorpayOrder } from "@/lib/razorpay";
+import { NextRequest } from "next/server";
 
-export async function POST(req: NextApiRequest) {
-  const sessionToken = req.cookies.sessionToken || "";
+export async function POST(req: NextRequest) {
+  const sessionToken = req.cookies.get("sessionToken")?.value || "";
   const session = await getSession(sessionToken);
 
   if (!session) {
@@ -12,13 +12,13 @@ export async function POST(req: NextApiRequest) {
 
   if (req.method === "POST") {
     try {
-      console.log("razorpay : ", req.body);
-      const { amount, currency } = req.body;
+      const body = await req.json();
+      const { amount, currency } = body;
       const order = await createRazorpayOrder(amount, currency);
 
-      return Response.json({ status: 200, order });
+      return Response.json({ status: 200,order});
     } catch (error) {
-      console.error(error);
+      console.error("Error:", error);
       return Response.json({ status: 500, error: "Internal Server Error" });
     }
   }

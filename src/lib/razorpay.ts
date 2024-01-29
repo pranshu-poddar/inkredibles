@@ -2,8 +2,8 @@
 import Razorpay from 'razorpay';
 
 export const razorpay = new Razorpay({
-  key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY || '',
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
+  key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY || "",
+  key_secret: process.env.NEXT_PUBLIC_RAZORPAY_SECRET,
 });
 
 export const createRazorpayOrder = async (amount: number, currency: any) => {

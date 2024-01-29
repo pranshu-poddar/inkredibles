@@ -7,6 +7,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Order {
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  orderId         String      @unique
+  accountId       String      @db.ObjectId
+  account         Account     @relation(fields: [accountId], references: [id])
+  items           OrderItem[]
+  totalAmount     Int
+  shippingAddress Address     @relation(fields: [addressId], references: [id])
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  addressId       String      @db.ObjectId
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  orderId String @db.ObjectId
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId String  @db.ObjectId
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  color     String
+  size      String
+
+  @@map("order_items")
+}
+
 model Product {
   id             String          @id @default(auto()) @map("_id") @db.ObjectId
   description    String
@@ -21,6 +50,7 @@ model Product {
   wishlistedBy   UserProduct[]
   productDetails ProductDetail[]
   reviews        Review[]
+  OrderItem      OrderItem[]
 
   @@map("products")
 }
@@ -97,6 +127,7 @@ model Account {
   cart      Cart?
   wishlist  UserProduct[]
   reviews   Review[]
+  orders    Order[]
   image     String?
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
@@ -117,14 +148,15 @@ model UserProduct {
 model Address {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  phone     String 
-  email     String 
+  phone     String
+  email     String
   street    String
   city      String
   state     String
   pin       String
   accountId String  @db.ObjectId
   account   Account @relation(fields: [accountId], references: [id])
+  Order     Order[]
 
   @@map("addresses")
 }
