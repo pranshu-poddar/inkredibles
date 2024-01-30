@@ -20,8 +20,8 @@ const Header = () => {
   const [showComponent, setShowComponent] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
-  // const [sessionToken, setsessionToken] = useState<string>()
-  const sessionToken = Cookies.get("sessionToken") || "";
+  const [sessionToken, setsessionToken] = useState<string>()
+  // const sessionToken = Cookies.get("sessionToken") || "";
   const { data: user, isLoading, isError } = useQuery({
     queryKey: ['user', sessionToken],
     queryFn: async () => {
@@ -53,7 +53,7 @@ const Header = () => {
 
     // Attach the scroll event listener
     window.addEventListener("scroll", handleScroll);
-    // setsessionToken(Cookies.get('sessionToken'))
+    setsessionToken(Cookies.get('sessionToken'))
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
