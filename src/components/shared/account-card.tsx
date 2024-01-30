@@ -22,6 +22,7 @@ const AccountCard = ({ sessionToken, isOpen, modal, user }: AccountCardProps) =>
     const pathName = usePathname();
     const router = useRouter();
     const [isLoading, setisLoading] = useState(false);
+
     const handleLogout = async () => {
         setisLoading(true)
         try {
@@ -30,9 +31,9 @@ const AccountCard = ({ sessionToken, isOpen, modal, user }: AccountCardProps) =>
                 Cookies.remove("sessionToken");
                 Cookies.remove("at");
                 localStorage.clear()
+                setisLoading(false)
+                router.push(Pages.Home)
             }
-            setisLoading(false)
-            router.push(Pages.Home)
         } catch (error: any) {
             toast.error(error.message);
         }
@@ -45,50 +46,53 @@ const AccountCard = ({ sessionToken, isOpen, modal, user }: AccountCardProps) =>
                 }`}
         >
             <Toaster />
-            <ul className=" pl-4 space-y-4 pr-8">
-                {sessionToken ? <Link href={Pages.Account} className=' mb-4 cursor-pointer'>
-                    <h4 className='text-sm'>Hello <span className='capitalize'>{user?.name}</span></h4>
-                    <p>{user?.phone}</p>
-                </Link> :
-                    <div className='mb-4'>
-                        <h4 className='text-sm'>Welcome</h4>
-                        <p className='mb-2'>To access account and manage orders</p>
-                        <CustomButton onClick={() => router.push(Pages.Login)} size='small'>LOGIN / SIGNUP</CustomButton>
-                    </div>}
+            <div className=" pl-4 space-y-4 pr-8">
+                {
+                    sessionToken ?
+                        <Link href={Pages.Account} className=' mb-4 cursor-pointer'>
+                            <h4 className='text-sm'>Hello <span className='capitalize'>{user?.name}</span></h4>
+                            <p>{user?.phone}</p>
+                        </Link> :
+                        <div className='mb-4'>
+                            <h4 className='text-sm'>Welcome</h4>
+                            <p className='mb-2'>To access account and manage orders</p>
+                            <CustomButton onClick={() => router.push(Pages.Login)} size='small'>LOGIN / SIGNUP</CustomButton>
+                        </div>
+                }
+
                 <div>
                     {AccountRoutes.map((item) => {
                         if (!item.roles.includes(user?.role || "user")) {
                             return null;
                         }
                         return (
-                            <li key={item.label}>
-                                <Link
-                                    href={pathName == item.path ? "" : item.path}
-                                    className={`flex items-center gap-2 pl-2 py-3 border-s-[3px] ${pathName == item.path
-                                        ? "border-orange-500 bg-orange-50 text-orange-700"
-                                        : "border-transparent text-gray-500 hover:border-gray-200 hover:bg-gray-100 hover:text-gray-700"
-                                        }`}
-                                >
-                                    <img src={item.icon} alt='' className='w-6 h-auto' />
-                                    <span className="text-sm font-medium">{item.label}</span>
-                                </Link>
-                            </li>
+                            <Link
+                                key={item.label}
+                                href={pathName == item.path ? "" : item.path}
+                                className={`flex items-center gap-2 pl-2 py-3 border-s-[3px] ${pathName == item.path
+                                    ? "border-orange-500 bg-orange-50 text-orange-700"
+                                    : "border-transparent text-gray-500 hover:border-gray-200 hover:bg-gray-100 hover:text-gray-700"
+                                    }`}
+                            >
+                                <img src={item.icon} alt='' className='w-6 h-auto' />
+                                <span className="text-sm font-medium">{item.label}</span>
+                            </Link>
                         );
                     })}
                 </div>
+
                 {sessionToken ? <CustomButton
-                    aria-disabled={isLoading}
                     size='small'
                     onClick={() => {
                         handleLogout()
                     }}
                 >
-                    <div className='flex items-center gap-2'>
+                    <span className='flex items-center gap-2'>
                         <IoLogOutOutline className="w-6 h-auto" />{isLoading ? "Logout..." : "Logout"}
-                    </div>
+                    </span>
                 </CustomButton>
                     : null}
-            </ul>
+            </div>
         </div>
     );
 };

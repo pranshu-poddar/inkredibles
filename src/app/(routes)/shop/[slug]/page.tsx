@@ -105,13 +105,13 @@ const Product = ({ params }: { params: { slug: string } }) => {
               <div className="flex items-center gap-3">
                 <span className='font-semibold text-inkredible-black'>Color</span>
                 {product?.productDetails.map((variant) => {
-                  return <button style={{ backgroundColor: `${variant.color}` }} onClick={() => setselectedProduct((prev) => ({ ...prev, color: variant.color }))} value={selectedProduct.color} key={variant.color} className={` rounded-full w-6 h-6 ring-offset-2 ring-black ${selectedProduct.color == variant.color && "shadow-xl ring-2"}`}></button>
+                  return <button style={{ backgroundColor: `${variant.color}` }} onClick={() => setselectedProduct((prev) => ({ ...prev, color: variant.color }))} value={selectedProduct.color} key={variant.color} className={` rounded-full w-8 h-8 ring-offset-2 ring-black ${selectedProduct.color == variant.color && "shadow-xl ring-2"}`}></button>
                 })}
               </div>
               <div className="flex items-center gap-3">
                 <span className='font-semibold text-inkredible-black'>Size</span>
                 {product?.productDetails.map((variant) => {
-                  return <button onClick={() => setselectedProduct((prev) => ({ ...prev, size: variant.size }))} value={selectedProduct.size} key={variant.size} className={` rounded-full w-8 h-8 font-semibold bg-white border  ring-inkredible-black ${selectedProduct.size == variant.size && "shadow-xl ring-2"}`}>
+                  return <button onClick={() => setselectedProduct((prev) => ({ ...prev, size: variant.size }))} value={selectedProduct.size} key={variant.size} className={` rounded-full w-10 h-10 text-sm capitalize font-semibold bg-white border  ring-inkredible-black ${selectedProduct.size == variant.size && "shadow-xl ring-2"}`}>
                     {variant.size}
                   </button>
                 })}
