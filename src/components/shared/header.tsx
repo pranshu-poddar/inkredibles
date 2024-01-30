@@ -30,7 +30,6 @@ const Header = () => {
       const response = await getAccountFromSessionId(sessionToken || '');
       return response;
     },
-    enabled:!!sessionToken,
   });
 
   const memoizedUser = useMemo(() => user, [user]);

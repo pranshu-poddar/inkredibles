@@ -7,7 +7,7 @@ import { Pages } from '@/constants/page.constant';
 import { useRouter } from 'next/navigation';
 import useStore from '@/lib/hooks/use-store';
 import { useCartStore } from '@/store/cart-store';
-import { useQueries, useQuery } from '@tanstack/react-query';
+import { useQueries } from '@tanstack/react-query';
 import { getProductById } from '@/actions/product/get-products';
 import { TCartItem } from '@/lib/types';
 
