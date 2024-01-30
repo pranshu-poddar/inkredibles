@@ -22,7 +22,7 @@ const OrderSummary = () => {
     const cart = useStore(useCartStore, (state) => state.items);
     const user =
         typeof window !== 'undefined' && window.localStorage
-            ? JSON.parse(localStorage.getItem('user') || '')
+            ? JSON.parse(localStorage.getItem('user') || '{}')  // Add a default value to handle parsing errors
             : {};
     const selectedAddress = useStore(useAddressStore, (state) => state.selectedAddress)
     const queryArray = cart?.map((item: TCartItem) => ({
