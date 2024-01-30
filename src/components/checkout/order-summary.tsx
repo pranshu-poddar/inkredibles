@@ -126,7 +126,7 @@ const OrderSummary = () => {
                 </div>
             </div>
             <div className="w-full flex justify-center items-center">
-                <button onClick={handleNavigate} className="hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white">{step == 1 ? "Continue to payment" : paymentLoading ? 'Processing...' : 'Pay Now'}</button>
+                <button onClick={()=>handleNavigate} className="hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white">{step == 1 ? "Continue to payment" : paymentLoading ? 'Processing...' : 'Pay Now'}</button>
             </div>
         </div>
     );
