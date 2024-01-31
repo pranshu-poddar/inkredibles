@@ -56,8 +56,9 @@ const OrderSummary = () => {
                 currency: "INR",
             }),
         });
-
+        
         const { order } = await response.json();
+        console.log('response', order);
 
         const options = {
             key: process.env.NEXT_PUBLIC_RAZORPAY_KEY || "",

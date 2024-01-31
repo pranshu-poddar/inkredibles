@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect, useMemo } from "react";
 import SearchBar from "./search-bar";
 import { CommonAssets } from "@/constants/assets.constant";
@@ -38,6 +38,7 @@ const Header = () => {
         })
         console.log('data', data);
         setuser(data);
+        sessionStorage.setItem('at', data?.id || '')
       }
       getUser()
     }
@@ -50,13 +51,6 @@ const Header = () => {
   const cart = useStore(useCartStore, (state) => state.items);
 
   const accountData = { role: user?.user?.role || "", phone: user?.user?.phone || "", name: user?.user?.firstName || "" }
-
-  Cookies.set('at', user?.id || "", {
-    expires: 7, // Set an appropriate expiration time
-    // secure: false, // Ensures the cookie is only sent over HTTPS
-    // httpOnly: false, // Helps protect against XSS attacks
-    sameSite: 'Strict', // Provides some protection against CSRF attacks
-  })
 
   useEffect(() => {
     setShowCart(false);
