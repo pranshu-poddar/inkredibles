@@ -33,7 +33,6 @@ const CartItem = ({ item, itemInfo, setshowCart }: CartItemProps) => {
 
     return (
         <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
-            <Toaster />
             <div className="flex w-full space-x-2 sm:space-x-4">
                 <img className="flex-shrink-0 object-cover w-20 h-20 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 " src={itemInfo?.imageUrl[0]} alt="Polaroid camera" />
                 <div className="flex flex-col justify-between w-full pb-4">

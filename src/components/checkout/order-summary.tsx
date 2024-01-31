@@ -20,15 +20,16 @@ const OrderSummary = () => {
     const pathName = usePathname();
     const step = pathName == '/checkout/cart' ? 1 : pathName == '/checkout/address' ? 2 : 3;
     const cart = useStore(useCartStore, (state) => state.items);
-    const user =
-        typeof window !== 'undefined' && window.localStorage
+    const user = typeof window !== 'undefined' && window.localStorage
             ? JSON.parse(localStorage.getItem('user') || '{}')
             : {};
     const selectedAddress = useStore(useAddressStore, (state) => state.selectedAddress)
+    
     const queryArray = cart?.map((item: TCartItem) => ({
         queryKey: ['cartitems', item.productId],
         queryFn: () => getProductById(item.productId), // Fetch data for each item
     }))
+
     const [Razorpay] = useRazorpay();
     const cartItems = useQueries({ queries: queryArray ?? [] });
     const items = cartItems.map((item) => item.data)

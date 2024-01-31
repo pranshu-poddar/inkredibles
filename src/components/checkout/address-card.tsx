@@ -25,6 +25,7 @@ const AddressCard = ({ address, id }: { address: TAddressForm, id: string }) => 
     const handleDeleteAddress = async () => {
         await mutation.mutateAsync();
     };
+    
     return (
         <div className='relative border p-4 mt-4 rounded-xl'>
             <Toaster />
