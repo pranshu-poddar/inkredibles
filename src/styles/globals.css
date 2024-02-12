@@ -38,8 +38,7 @@ body {
   }
 
   h2 {
-    font-size: 36px;
-    @apply text-inkredible-black
+    @apply text-inkredible-black sm:text-[36px] text-xl leading-relaxed
   }
 
   p, a, li {

@@ -8,7 +8,7 @@ const SpecialSection = () => {
       <img
         src={HomeAssets.SpecialBanner}
         alt="product banner"
-        className="absolute inset-0 object-contain"
+        className="absolute inset-0 object-cover w-full h-full"
       />
 
       <div className="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
