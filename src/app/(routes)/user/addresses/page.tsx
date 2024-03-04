@@ -17,7 +17,7 @@ const Page = () => {
   })
   const addresses = data || []
   return (
-    <div className="w-[60%]">
+    <div className="sm:w-[60%]">
       <div>
         <h2 className="text-base font-semibold leading-7 text-gray-900">Select Delievery Address</h2>
         <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive the order.</p>

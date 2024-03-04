@@ -45,22 +45,22 @@ const SignUp = () => {
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
             <div className="w-full h-auto bg-[url('https://source.unsplash.com/Mv9hjnEUHR4/600x800')] bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"></div>
 
-            <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
+            <div className="w-full lg:w-7/12 bg-white sm:p-5 rounded-lg lg:rounded-l-none">
               <h3 className="pt-4 text-2xl text-center">Create an Account!</h3>
               <FormProvider {...methods}>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
-                  className="px-8 pt-6 pb-8 mb-4 bg-white rounded"
+                  className="sm:px-8 px-4 pt-6 pb-8 mb-4 bg-white rounded"
                 >
-                  <div className="mb-10 flex max-md:flex-row gap-4">
+                  <div className="sm:mb-10 mb-6 max-sm:gap-6 sm:flex-row flex-col flex gap-4">
                     <CustomInput name="firstName" placeholder="First Name" label="First Name" type="text" error={errors.firstName?.message} />
                     <CustomInput name="lastName" placeholder="Last Name" label="Last Name" type="text" error={errors.lastName?.message} />
                   </div>
-                  <div className="mb-10 md:flex md:justify-between">
+                  <div className="sm:mb-10 mb-6 max-sm:gap-6 sm:flex-row flex-col flex md:justify-between">
                     <CustomInput name="email" placeholder="Email" label="Email" type="email" error={errors.email?.message} />
                     <CustomInput name="phone" placeholder="Phone" label="Phone" type="text" error={errors.phone?.message} />
                   </div>
-                  <div className="mb-10 md:flex md:justify-between">
+                  <div className="sm:mb-10 mb-6 max-sm:gap-4 sm:flex-row flex-col flex md:justify-between">
                     <div className="mb-4 md:mr-2 md:mb-0 relative">
                       <CustomInput name="password" label="Password" placeholder={passwordVisibility ? "" : "******************"} type={passwordVisibility ? "text" : "password"} error={errors.password?.message} />
                     </div>

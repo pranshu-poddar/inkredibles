@@ -55,16 +55,16 @@ const Page = () => {
   return (
     <FormProvider {...methods}>
       <Toaster />
-      <div className=" bg-white rounded w-1/2 h-[85%] drop-shadow p-2 ">
+      <div className=" bg-white rounded sm:w-1/2 h-[85%] drop-shadow p-2 ">
         <div className='p-4 bg-white sticky inset-0 flex h-fit w-full justify-between'>
           <span className='font-semibold z-50 h-fit text-gray-600'>EDIT PROFILE</span>
         </div>
-        <div className='h-[90%] overflow-scroll relative'>
+        <div className='h-[90%] min-h-full overflow-scroll relative'>
           <form onSubmit={methods.handleSubmit(onSubmit)} className='grid pt-2 grid-cols-1 gap-x-6 gap-y-8 min-h-full px-2 sm:grid-cols-6 w-full'>
-            <CustomInput error={errors.firstName?.message} label="First Name" type="text" name="firstName" placeholder="First Name" span="sm:col-span-3" />
-            <CustomInput error={errors.lastName?.message} label="Last Name" type="text" name="lastName" placeholder="Last Name" span="sm:col-span-3" />
-            <CustomInput error={errors.phone?.message} label="Phone Number" type="text" name="phone" placeholder="Phone Number" span="sm:col-span-6" />
-            <CustomInput error={errors.email?.message} label="Email" type="email" name="email" placeholder="email" span="sm:col-span-6" />
+            <CustomInput error={errors.firstName?.message} label="First Name" type="text" name="firstName" placeholder="First Name" span="sm:col-span-3 col-span-6" />
+            <CustomInput error={errors.lastName?.message} label="Last Name" type="text" name="lastName" placeholder="Last Name" span="sm:col-span-3 col-span-6" />
+            <CustomInput error={errors.phone?.message} label="Phone Number" type="text" name="phone" placeholder="Phone Number" span="sm:col-span-6 col-span-6" />
+            <CustomInput error={errors.email?.message} label="Email" type="email" name="email" placeholder="email" span="sm:col-span-6 col-span-6" />
             <div className='flex items-center gap-4'>
               <label htmlFor="gender" className="block text-sm font-medium text-gray-900"> Gender </label>
               <select

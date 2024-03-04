@@ -46,11 +46,11 @@ const OtpVerification = () => {
   return (
     <section className="drop-shadow ">
       <div className="container2 mx-auto drop-shadow">
-        <div className="flex justify-center px-6 my-12">
+        <div className="flex justify-center sm:px-6 my-12">
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
             <div className="w-full h-auto bg-[url('https://source.unsplash.com/oWTW-jNGl9I/600x800')] bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"></div>
 
-            <div className="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
+            <div className="w-full lg:w-1/2 bg-white sm:p-5 rounded-lg lg:rounded-l-none">
               <div className="px-8 mb-4 text-center">
                 <h3 className="pt-4 mb-2 text-2xl">Verify Your OTP</h3>
                 <p className="mb-4 text-sm text-gray-700">

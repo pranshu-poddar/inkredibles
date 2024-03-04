@@ -37,11 +37,11 @@ const Login = () => {
   return (
     <section className="drop-shadow">
       <div className="container2 mx-auto">
-        <div className="flex justify-center px-6 my-12">
+        <div className="flex justify-center sm:px-6 my-12">
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
             <div className="w-full h-auto bg-[url('https://source.unsplash.com/K4mSJ7kc0As/600x800')] bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"></div>
 
-            <div className="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
+            <div className="w-full lg:w-1/2 bg-white sm:p-5 rounded-lg lg:rounded-l-none">
               <h3 className="pt-4 text-2xl text-center">Login or Signup</h3>
               <FormProvider {...methods}>
                 <form
