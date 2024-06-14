@@ -1,3 +1,4 @@
+import { Pages } from "@/constants/page.constant";
 import React from "react";
 
 const Footer = () => {
@@ -48,42 +49,42 @@ const Footer = () => {
           </div>
 
           <div className="text-center sm:text-left">
-            <h6 className=" font-semibold text-gray-900">Extras</h6>
+            <h6 className=" font-semibold text-gray-900">Company</h6>
 
             <ul className="mt-8 space-y-4 text-sm">
               <li>
                 <a
                   className="text-gray-700 transition hover:text-gray-700/75"
-                  href="/"
+                  href={Pages.AboutUs}
                 >
-                  Web Development
+                  About Us
                 </a>
               </li>
 
               <li>
                 <a
                   className="text-gray-700 transition hover:text-gray-700/75"
-                  href="/"
+                  href={Pages.ContactUs}
                 >
-                  Web Design
+                  Contact Us
                 </a>
               </li>
 
               <li>
                 <a
                   className="text-gray-700 transition hover:text-gray-700/75"
-                  href="/"
+                  href={Pages.Shop}
                 >
-                  Marketing
+                  All Products
                 </a>
               </li>
 
               <li>
                 <a
                   className="text-gray-700 transition hover:text-gray-700/75"
-                  href="/"
+                  href={Pages.PrivacyPolicy}
                 >
-                  Google Ads
+                  Privacy Policy
                 </a>
               </li>
             </ul>
@@ -197,7 +198,7 @@ const Footer = () => {
 
         <div className="mt-16 border-t border-gray-200 pt-6 px-10 sm:flex sm:items-center sm:justify-between">
           <p className="text-center text-sm text-gray-500 sm:text-left">
-            Copyright &copy; 2023. All rights reserved.
+            Copyright &copy; 2024. All rights reserved.
           </p>
           <ul className="mt-4 flex justify-center gap-6 sm:mt-0 sm:justify-start">
             <li>

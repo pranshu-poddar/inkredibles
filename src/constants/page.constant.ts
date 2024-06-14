@@ -1,3 +1,5 @@
+import PrivacyPolicy from "@/app/(routes)/privacy-policy/page";
+
 const PublicPages = {
   Home: "/",
   Shop: "/shop",
@@ -16,6 +18,7 @@ const PublicPages = {
   EditProfile:"/user/profile/edit",
   OrderDetails:"/user/orders/order-details",
   OrderSummary:"/order-summary",
+  PrivacyPolicy:"/privacy-policy"
 };
 
 const ProtectedPages = {
