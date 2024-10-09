@@ -105,7 +105,7 @@ const Header = () => {
 
         {/* search bar  */}
         <SearchBar />
-        <p>Call Free Support: 0123456789</p>
+        <p>Call Free Support: <Link href={"tel:919372677838"}>+91 9372677838</Link></p>
       </div>
 
       {/* navbar */}

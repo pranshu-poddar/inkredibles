@@ -3,6 +3,7 @@ import React from "react";
 import { FaFax, FaPhoneAlt } from "react-icons/fa";
 import { GoMail } from "react-icons/go";
 import ContactForm from "./contact-form";
+import Link from "next/link";
 
 const TopSection = () => {
   return (
@@ -16,17 +17,17 @@ const TopSection = () => {
           sequitur mutationem consuetudium lectorum. Mirum est notare quam
         </p>
         <ul className="[&>*]:py-4 [&>*]:border-t ">
-          <li className="flex gap-4">
+          <li className="flex items-center gap-4">
             <FaFax />
-            <span>Address : Your address goes here.</span>
+            <span>Address : 492, 2nd Lane, MJ Market, Chandra Chowk, Mumbai 400002</span>
           </li>
-          <li className="flex gap-4">
-            <FaPhoneAlt />
-            <span> demo@example.com</span>
-          </li>
-          <li className="flex gap-4">
+          <li className="flex items-center gap-4">
             <GoMail />
-            <span>0(1234) 567 890</span>
+            <Link href={"mailto:hnd.fabricss@gmail.com"}>hnd.fabricss@gmail.com</Link>
+          </li>
+          <li className="flex items-center gap-4">
+            <FaPhoneAlt />
+            <Link href={"tel:919372677838"}>+91 9372677838</Link>
           </li>
         </ul>
       </div>
