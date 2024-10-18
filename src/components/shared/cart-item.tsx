@@ -44,8 +44,8 @@ const CartItem = ({ item, itemInfo, setshowCart }: CartItemProps) => {
                             <p className="text-sm dark:text-gray-400">Quantity: <span className='text-inkredible-black font-medium capitalize'>{item.quantity}</span></p>
                         </div>
                         <div className="text-right">
-                            {itemInfo?.discount ? <p className="tracking-wide text-xl font-medium "> ${(100 - itemInfo.discount) / 100 * itemInfo.price}</p> : <p className="tracking-wide text-xl font-medium ">{itemInfo?.price}</p>}
-                            {itemInfo?.discount && <p className="line-through decoration-red-500 decoration-2 mr-2">${itemInfo.price}</p>}
+                            {itemInfo?.discount ? <p className="tracking-wide text-xl font-medium "> ₹{(100 - itemInfo.discount) / 100 * itemInfo.price}</p> : <p className="tracking-wide text-xl font-medium ">{itemInfo?.price}</p>}
+                            {itemInfo?.discount && <p className="line-through decoration-red-500 decoration-2 mr-2">₹{itemInfo.price}</p>}
                         </div>
                     </div>
                     <div className="flex text-sm divide-x">
