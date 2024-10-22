@@ -1,10 +1,12 @@
 'use client'
 import { verifyOtp } from '@/actions/auth/verify-otp';
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cookies from 'js-cookie';
 import { decodeUrl } from '@/utils/url-parse';
 import { Pages } from '@/constants/page.constant';
+import { AccountAssets } from '@/constants/assets.constant';
+import Image from 'next/image';
 
 const OtpVerification = () => {
   const router = useRouter();
@@ -15,40 +17,49 @@ const OtpVerification = () => {
   const [otp, setOtp] = useState("");
   const [verifying, setverifying] = useState(false)
 
-  if (!email || !userId) {
-    router.push(Pages.Login)
-  }
+  useEffect(() => {
+    if (!email || !userId) {
+      router.push(Pages.Login);
+    }
+  }, [email, userId, router]);
+  
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setverifying(true)
+    setverifying(true);
     try {
-      const response = await verifyOtp(otp, decodeUrl(email || ""));
+      const decodedEmail = email ? decodeUrl(email) : "";
+      const response = await verifyOtp(otp, decodedEmail);
       if (response.status === 200) {
-        localStorage.setItem('user', JSON.stringify(response.user))
-        cookies.set('sessionToken', response.sessionToken.toString(), {
-          expires: 7, // Set an appropriate expiration time
-          path: "/",
-          // secure: true, // Ensures the cookie is only sent over HTTPS
-          // httpOnly: true, // Helps protect against XSS attacks
-          sameSite: 'Strict', // Provides some protection against CSRF attacks
-        });
-        setverifying(false)
-        router.push(redirect || Pages.Home)
+        await Promise.all([
+          localStorage.setItem('user', JSON.stringify(response.user)),
+          cookies.set('sessionToken', response.sessionToken.toString(), {
+            expires: 7,
+            path: "/",
+            sameSite: 'Strict',
+          })
+        ]);
+        setverifying(false);
+        router.push(redirect || Pages.Home);
       } else {
-        console.log(response.message)
+        console.log(response.message);
+        setverifying(false);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      setverifying(false);
     }
   };
+  
 
   return (
     <section className="drop-shadow ">
       <div className="container2 mx-auto drop-shadow">
         <div className="flex justify-center sm:px-6 my-12">
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
-            <div className="w-full h-auto bg-[url('https://source.unsplash.com/oWTW-jNGl9I/600x800')] bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"></div>
+          <div className={`w-full h-auto bg-gray-400 overflow-hidden relative hidden lg:block lg:w-1/2 rounded-l-lg`}>
+            <Image src={AccountAssets.LoginIn} fill alt="login" className="w-full h-full object-cover rounded-l-lg" />
+            </div>
 
             <div className="w-full lg:w-1/2 bg-white sm:p-5 rounded-lg lg:rounded-l-none">
               <div className="px-8 mb-4 text-center">

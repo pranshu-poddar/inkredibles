@@ -10,6 +10,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { encodeUrl } from "@/utils/url-parse";
 import CustomInput from "@/components/shared/custom-input";
 import CustomButton from "@/components/shared/custom-button";
+import Image from "next/image";
+import { AccountAssets } from "@/constants/assets.constant";
 
 const SignUp = () => {
   const Router = useRouter();
@@ -43,7 +45,9 @@ const SignUp = () => {
       <div className="container mx-auto">
         <div className="flex justify-center px-6 my-12">
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
-            <div className="w-full h-auto bg-[url('https://source.unsplash.com/Mv9hjnEUHR4/600x800')] bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"></div>
+            <div className={`w-full h-auto bg-gray-400 overflow-hidden relative hidden lg:block lg:w-1/2 rounded-l-lg`}>
+              <Image src={AccountAssets.SignUp} fill alt="login" className="w-full h-full object-cover rounded-l-lg" />
+            </div>
 
             <div className="w-full lg:w-7/12 bg-white sm:p-5 rounded-lg lg:rounded-l-none">
               <h3 className="pt-4 text-2xl text-center">Create an Account!</h3>

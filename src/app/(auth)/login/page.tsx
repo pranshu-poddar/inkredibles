@@ -2,10 +2,12 @@
 import { SignIn } from "@/actions/auth/login";
 import CustomButton from "@/components/shared/custom-button";
 import CustomInput from "@/components/shared/custom-input";
+import { AccountAssets } from "@/constants/assets.constant";
 /* eslint-disable @next/next/no-img-element */
 import { TLoginSchema, loginSchema } from "@/lib/types";
 import { encodeUrl } from "@/utils/url-parse";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -39,7 +41,9 @@ const Login = () => {
       <div className="container2 mx-auto">
         <div className="flex justify-center sm:px-6 my-12">
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
-            <div className="w-full h-auto bg-[url('https://source.unsplash.com/K4mSJ7kc0As/600x800')] bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"></div>
+            <div className={`w-full h-auto bg-gray-400 overflow-hidden relative hidden lg:block lg:w-1/2 rounded-l-lg`}>
+            <Image src={AccountAssets.LoginIn} fill alt="login" className="w-full h-full object-cover rounded-l-lg" />
+            </div>
 
             <div className="w-full lg:w-1/2 bg-white sm:p-5 rounded-lg lg:rounded-l-none">
               <h3 className="pt-4 text-2xl text-center">Login or Signup</h3>

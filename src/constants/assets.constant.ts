@@ -28,4 +28,6 @@ export const AccountAssets = {
   EditAccount:"/images/account/edit-account.png",
   Favorites:"/images/account/faviortes.png",
   Product:"/images/account/product.png",
+  LoginIn: "/images/account/login-bg.webp",
+  SignUp: "/images/account/signup-bg.webp",
 }
