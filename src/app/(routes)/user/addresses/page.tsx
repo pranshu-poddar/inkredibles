@@ -3,13 +3,16 @@ import { getAddressesByAccount } from '@/actions/account/address';
 import AddressCard from '@/components/checkout/address-card';
 import AddressForm from '@/components/checkout/address-form';
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { ProductCardSkeleton } from '@/components/shared/skeleton';
 
 const Page = () => {
   const [showAddressForm, setshowAddressForm] = useState(false)
-  const accountId = sessionStorage.getItem('at') || "";
+  const [accountId, setaccountId] = useState<string>("");
+  useEffect(() => {
+    setaccountId(localStorage.getItem('accountId')||"");
+  }, []);
   const { data:addresses, isLoading, error } = useQuery({
     queryKey: ['address', accountId],
     queryFn: async () => await getAddressesByAccount(accountId),
