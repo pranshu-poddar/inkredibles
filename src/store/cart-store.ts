@@ -22,61 +22,68 @@ export const useCartStore = create(
                 item.productId === cartItem.productId &&
                 item.color === cartItem.color &&
                 item.size === cartItem.size
-                  ? { ...item, quantity: item.quantity + cartItem.quantity }
+                  ? { 
+                      ...item, 
+                      quantity: item.quantity + cartItem.quantity,
+                      total: (item.quantity + cartItem.quantity) * item.price, // Update total based on quantity
+                    }
                   : item,
               )
             : [
-                ...state.items,
                 {
-                  productId: cartItem.productId,
-                  color: cartItem.color,
-                  size: cartItem.size,
-                  quantity: cartItem.quantity,
+                  ...cartItem,
+                  total: cartItem.price * cartItem.quantity, // Set total when adding new item
                 },
+                ...state.items,
               ];
 
           saveCartToMongoDB(updatedItems);
           return { items: updatedItems };
         });
         // Call syncWithDatabase after adding an item
-        useCartStore.getState().syncWithDatabase();
+        get().syncWithDatabase();
       },
 
       removeItem: (cartItem: TCartItem) => {
         set((state) => {
           const updatedItems = state.items.filter(
             (item) =>
-              !(
-                item.productId === cartItem.productId &&
+              !(item.productId === cartItem.productId &&
                 item.color === cartItem.color &&
-                item.size === cartItem.size
-              ),
+                item.size === cartItem.size),
           );
           saveCartToMongoDB(updatedItems);
           return { items: updatedItems };
         });
         // Call syncWithDatabase after removing an item
-        useCartStore.getState().syncWithDatabase();
+        get().syncWithDatabase();
       },
 
       updateQuantity: (cartItem: TCartItem) => {
-        set((state) => ({
-          items: state.items.map((item) =>
+        set((state) => {
+          const updatedItems = state.items.map((item) =>
             item.productId === cartItem.productId &&
             item.color === cartItem.color &&
             item.size === cartItem.size
-              ? { ...item, quantity: cartItem.quantity }
+              ? {
+                  ...item,
+                  quantity: cartItem.quantity,
+                  total: cartItem.price * cartItem.quantity, // Update total when quantity changes
+                }
               : item,
-          ),
-        }));
+          );
+
+          saveCartToMongoDB(updatedItems);
+          return { items: updatedItems };
+        });
         // Call syncWithDatabase after updating quantity
-        useCartStore.getState().syncWithDatabase();
+        get().syncWithDatabase();
       },
 
       clearCart: () => {
         set({ items: [] });
         // Call syncWithDatabase after clearing the cart
-        useCartStore.getState().syncWithDatabase();
+        get().syncWithDatabase();
       },
 
       syncWithDatabase: async () => {

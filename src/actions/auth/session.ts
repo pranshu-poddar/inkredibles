@@ -30,6 +30,10 @@ export const getSession = async (sessionToken: string) => {
     },
   });
 
+  if (session && session.expires < new Date()) {
+    throw new Error("Session expired");
+}
+
   return session;
 };
 

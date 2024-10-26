@@ -42,7 +42,11 @@ const Header = () => {
         })
         console.log('data', data);
         setuser(data);
-        sessionStorage.setItem('at', data?.id || '')
+        Cookies.set('at', data?.id || '' ,{
+          expires: 7,
+          path: "/",
+          sameSite: 'Strict',
+        })
       }
       getUser()
     }

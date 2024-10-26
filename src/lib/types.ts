@@ -1,54 +1,48 @@
 import { ProductCategory } from "@/constants/data.constant";
 import { z } from "zod";
 
+// Common Validations
+const emailValidation = z
+  .string()
+  .min(1, { message: "Email is required" })
+  .email({ message: "Must be a valid email" })
+  .trim()
+  .toLowerCase();
+
+const phoneValidation = z
+  .string()
+  .trim()
+  .min(1, { message: "Phone number is required" })
+  .length(10, { message: "Phone number must be 10 digits" });
+
+// **Login Schema**
 export const loginSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: "Required" })
-    .email({ message: "Must be a valid email" })
-    .trim()
-    .toLowerCase(),
-  password: z.string().min(6, "atleast 6 digits"),
+  email: emailValidation,
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 export type TLoginSchema = z.infer<typeof loginSchema>;
 
+// **Forget Password Schema**
 export const forgetPasswordSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: "Required" })
-    .email({ message: "Must be a valid email" })
-    .trim()
-    .toLowerCase(),
+  email: emailValidation,
 });
 
 export type TForgetPasswordSchema = z.infer<typeof forgetPasswordSchema>;
 
+// **Signup Schema**
 export const signupSchema = z
   .object({
-    firstName: z.string().trim().min(1, { message: "Required" }),
-    lastName: z.string().trim().min(1, { message: "Required" }),
-    email: z
-      .string()
-      .min(1, { message: "Required" })
-      .email({ message: "Must be a valid email" })
-      .trim()
-      .toLowerCase(),
-    phone: z
-      .string()
-      .trim()
-      .min(1, "Required")
-      .length(10, "Phone number must be 10 digits"),
-    password: z
-      .string()
-      .min(6, { message: "Password must be atleast 6 characters" }),
-    confirmPassword: z
-      .string()
-      .min(1, { message: "Confirm Password is required" }),
+    firstName: z.string().trim().min(1, { message: "First name is required" }),
+    lastName: z.string().trim().min(1, { message: "Last name is required" }),
+    email: emailValidation,
+    phone: phoneValidation,
+    password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+    confirmPassword: z.string().min(1, { message: "Confirm Password is required" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ["confirmPassword"],
-    message: "password must match",
+    message: "Passwords must match",
   });
 
 export type TSignupSchema = z.infer<typeof signupSchema>;
@@ -57,41 +51,31 @@ export type TSignupSchema = z.infer<typeof signupSchema>;
 export const ProductDetailSchema = z.object({
   size: z.string().min(1, { message: "Size is required" }),
   color: z.string().min(1, { message: "Color is required" }),
-  quantity: z
-    .number()
-    .int()
-    .min(5, { message: "Quantity must be greater than or equal to 5" }),
+  quantity: z.number().int().min(5, { message: "Quantity must be greater than or equal to 5" }),
 });
 
 export type TProductDetailSchema = z.infer<typeof ProductDetailSchema>;
 
+// **Product Schema**
 export const ProductSchema = z.object({
   description: z.string().min(1, { message: "Description is required" }),
   category: z.string().refine(
-    (value) => {
-      return ProductCategory.includes(value);
-    },
+    (value) => ProductCategory.includes(value),
     { message: "Invalid category" },
   ),
   imageUrl: z.array(z.string()),
   name: z.string().min(1, { message: "Name is required" }),
-  price: z
-    .number()
-    .min(0, { message: "Price must be greater than or equal to 0" }),
-  discount: z
-    .number()
-    .min(0, { message: "Discount can't be negative" })
-    .max(100, { message: "Discount must be less than or equal to 100" }),
+  price: z.number().min(0, { message: "Price must be greater than or equal to 0" }),
+  discount: z.number().min(0, { message: "Discount can't be negative" }).max(100, { message: "Discount must be less than or equal to 100" }),
   updatedAt: z.date().optional(),
   createdAt: z.date().optional(),
   id: z.string().optional(),
-  productDetails: z
-    .array(ProductDetailSchema)
-    .min(1, { message: "At least one product detail is required" }),
+  productDetails: z.array(ProductDetailSchema).min(1, { message: "At least one product detail is required" }),
 });
 
 export type TProductSchema = z.infer<typeof ProductSchema>;
 
+// **Image Type**
 export type ImageType = {
   title: string;
   url: string;
@@ -102,9 +86,12 @@ export type ImageType = {
 // **CartItem Schema**
 export const CartItemSchema = z.object({
   productId: z.string(), // Assuming product IDs are UUIDs
-  color: z.string().min(1),
-  size: z.string().min(1),
-  quantity: z.number().int().min(1),
+  color: z.string().min(1, { message: "Color is required" }),
+  size: z.string().min(1, { message: "Size is required" }),
+  quantity: z.number().int().min(1, { message: "Quantity must be at least 1" }),
+  price: z.number().int().min(0, { message: "Price must be greater than or equal to 0" }), // Price in smallest unit (e.g., cents)
+  image: z.string().url().optional(), // Image URL; optional if not always required
+  total: z.number().int().min(0).optional(),
 });
 
 export type TCartItem = z.infer<typeof CartItemSchema>;
@@ -121,38 +108,29 @@ export const CartSchema = z.object({
 
 export type TCart = z.infer<typeof CartSchema>;
 
+// **Address Schema**
 export const AddressSchema = z.object({
   id: z.string().optional(),
-  name: z.string().min(1, { message: "Recipient's name" }),
-  phone: z
-    .string()
-    .trim()
-    .min(1, "Required")
-    .length(10, "Phone number must be 10 digits"),
-  email: z
-    .string()
-    .min(1, { message: "Required" })
-    .email({ message: "Must be a valid email" })
-    .trim()
-    .toLowerCase(),
-  street: z.string().min(1, { message: "Street address" }),
-  city: z.string().min(1, { message: "City" }),
-  state: z.string().min(1, { message: "State or province" }),
-  pin: z
-    .string()
-    .min(1, { message: "Postal code" })
-    .regex(new RegExp("^[0-9]{5,6}$")),
+  name: z.string().min(1, { message: "Recipient's name is required" }),
+  phone: phoneValidation,
+  email: emailValidation,
+  street: z.string().min(1, { message: "Street address is required" }),
+  city: z.string().min(1, { message: "City is required" }),
+  state: z.string().min(1, { message: "State or province is required" }),
+  isDefault: z.boolean().optional(),
+  pin: z.string().min(1, { message: "Postal code is required" }).regex(/^[0-9]{5,6}$/, { message: "Postal code must be 5 or 6 digits" }),
 });
 
 export type TAddressForm = z.infer<typeof AddressSchema>;
 
+// **User Schema**
 export const UserSchema = z.object({
-  firstName: z.string().min(2,{message:"first name"}).max(50), // Adjust min and max length as needed
-  lastName: z.string().min(2,{message:"last name"}).max(50),
-  phone: z.string().regex(/^\+?[0-9]{1,15}$/), // Validate phone number pattern
-  gender: z.string().min(1), // You might want to customize this based on available options
-  email: z.string().email(), // Validate email format
-  DOB: z.date().optional(), // You might want to add more specific date validations here
+  firstName: z.string().min(2, { message: "First name is required" }).max(50),
+  lastName: z.string().min(2, { message: "Last name is required" }).max(50),
+  phone: phoneValidation,
+  gender: z.string().min(1, { message: "Gender is required" }), // Customize based on available options
+  email: emailValidation, // Validate email format
+  DOB: z.date().optional(), // Add more specific date validations if necessary
 });
 
 export type TUser = z.infer<typeof UserSchema>;

@@ -22,14 +22,14 @@ const AddressForm = ({ setshowAddressForm }: AddressFormProps) => {
   const { formState: { errors } } = methods
   const queryClient = useQueryClient();
 
+  const accountId = Cookies.get('at') || "";
   const mutation = useMutation({
     mutationFn: (data: TAddressForm) => {
-      const accountId = Cookies.get('at') || "";
       return createAddress(accountId, data);
     },
     onSuccess: () => {
       toast.success("Address added successfully!");
-      queryClient.invalidateQueries({ queryKey: ['address'] });
+      queryClient.invalidateQueries({ queryKey: ['address',accountId] });
       setshowAddressForm(false);
     },
   });

@@ -1,12 +1,8 @@
+import { TCartItem } from '@/lib/types';
 import React from 'react';
 import { FaMinus, FaPlus } from "react-icons/fa";
 const QuantityInput = ({ setQuantity, quantity }: {
-    quantity: number, setQuantity: React.Dispatch<React.SetStateAction<{
-        productId: string;
-        color: string;
-        size: string;
-        quantity: number;
-    }>>
+    quantity: number, setQuantity: React.Dispatch<React.SetStateAction<TCartItem>>
 }) => {
     const handleDecrement = () => {
         setQuantity((prev) => ({ ...prev, quantity: Math.max(1, prev.quantity - 1) })); // Prevent going below 1

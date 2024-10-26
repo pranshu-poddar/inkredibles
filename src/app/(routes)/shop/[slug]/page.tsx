@@ -7,7 +7,7 @@ import SliderContainer from '@/components/shared/slider';
 import QuantityInput from '@/components/shop/quantity-input';
 import RelatedProducts from '@/components/shop/related-products';
 import Tabs from '@/components/shop/tabs';
-import { TProductSchema } from '@/lib/types';
+import { TCartItem, TProductSchema } from '@/lib/types';
 import { useCartStore } from '@/store/cart-store';
 import { decodeUrl, encodeUrl } from '@/utils/url-parse';
 import { useQuery } from '@tanstack/react-query';
@@ -20,6 +20,8 @@ const Product = ({ params }: { params: { slug: string } }) => {
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", params.slug],
     queryFn: () => getProductByName(decodeUrl(params.slug)),
+    refetchOnWindowFocus: false,
+    enabled: !!params.slug
   })
   const category = product?.category;
   const { data: relatedProducts } =
@@ -29,22 +31,42 @@ const Product = ({ params }: { params: { slug: string } }) => {
       enabled: !!category,
     });
 
-  const [selectedProduct, setselectedProduct] = useState({ productId: product?.id || "", color: "", size: "", quantity: 1 })
+  const [selectedProduct, setselectedProduct] = useState<TCartItem>({ productId: product?.id || "", color: "", size: "", quantity: 1, price: product?.price || 0, image: product?.imageUrl[0] || "" , total: product?.price || 0})
   const cartStore = useCartStore();
 
   useEffect(() => {
-    setselectedProduct((prev) => ({ ...prev, productId: product?.id || "", quantity: 1 }))
-  }, [product])
+    if (product && product.price) {
+        setselectedProduct((prev) => ({
+            ...prev,
+            productId: product.id,
+            color: "",
+            size: "",
+            quantity: 1,
+            price: product.price,
+            image: product.imageUrl[0],
+            total: product.price // Ensure this is set here
+        }));
+    } else {
+        console.error("Product price is missing or invalid:", product);
+    }
+}, [product]);
+
 
   const handleAddToCart = async () => {
     if (!selectedProduct.color || !selectedProduct.size) {
-      toast.error("Select a color and size")
+        toast.error("Select a color and size");
+    } else if (selectedProduct.price === undefined || isNaN(selectedProduct.price)) {
+        toast.error("Price is missing or invalid");
     } else {
-      console.log(selectedProduct)
-      cartStore.addItem(selectedProduct);
-      toast.success(`${product?.name} Added to Cart`)
+        const updatedProduct = {
+            ...selectedProduct,
+            total: selectedProduct.price * selectedProduct.quantity,
+        };
+        cartStore.addItem(updatedProduct);
+        toast.success(`${product?.name} Added to Cart`);
     }
-  };
+};
+
 
   return (
     <section className="text-gray-600 body-font overflow-hidden">

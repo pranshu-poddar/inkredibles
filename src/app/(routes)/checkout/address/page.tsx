@@ -11,29 +11,14 @@ import { TAddressForm } from '@/lib/types';
 
 const Page = () => {
     const [showAddressForm, setshowAddressForm] = useState(false)
-    const [addresses, setaddresses] = useState<TAddressForm[] | null>(null)
-    const [accountId, setaccountId] = useState<string>()
-    const [isLoading, setisLoading] = useState(true)
 
-    useEffect(() => {
-        setaccountId(typeof window !== undefined && sessionStorage.getItem('at') || "")
-    }, [])
-
-    const queryClient = useQueryClient();
-    useEffect(() => {
-        if (addresses === null) {
-            console.log('accountId', accountId)
-            const getAddresses = async () => {
-                const data = await queryClient.fetchQuery({
-                    queryKey: ['address', accountId],
-                    queryFn: async () => { return await getAddressesByAccount(accountId || '') },
-                })
-                setaddresses(data)
-                setisLoading(false)
-            }
-            getAddresses()
-        }
-    }, [accountId, addresses, queryClient])
+    const accountId = Cookies.get('at') || ""
+    const { data:addresses, isLoading, error } = useQuery({
+      queryKey: ['address', accountId],
+      queryFn: async () => await getAddressesByAccount(accountId),
+      refetchOnWindowFocus: false,
+      enabled: !!accountId,
+    })
 
     return (
         <div>
