@@ -98,7 +98,7 @@ const OrderSummary = () => {
 
                 setPaymentLoading(false);
                 useCartStore.getState().clearCart();
-                router.push(`${Pages.OrderSummary}?orderId=${order.id}`);
+                router.push(Pages.Orders);
             },
             prefill: {
                 name: user.name,
