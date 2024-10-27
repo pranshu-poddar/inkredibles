@@ -31,41 +31,41 @@ const Product = ({ params }: { params: { slug: string } }) => {
       enabled: !!category,
     });
 
-  const [selectedProduct, setselectedProduct] = useState<TCartItem>({ productId: product?.id || "", color: "", size: "", quantity: 1, price: product?.price || 0, image: product?.imageUrl[0] || "" , total: product?.price || 0})
+  const [selectedProduct, setselectedProduct] = useState<TCartItem>({ productId: product?.id || "", color: "", size: "", quantity: 1, price: product?.price || 0, image: product?.imageUrl[0] || "", total: product?.price || 0 })
   const cartStore = useCartStore();
 
   useEffect(() => {
     if (product && product.price) {
-        setselectedProduct((prev) => ({
-            ...prev,
-            productId: product.id,
-            color: "",
-            size: "",
-            quantity: 1,
-            price: product.price,
-            image: product.imageUrl[0],
-            total: product.price // Ensure this is set here
-        }));
+      setselectedProduct((prev) => ({
+        ...prev,
+        productId: product.id,
+        color: "",
+        size: "",
+        quantity: 1,
+        price: product.price,
+        image: product.imageUrl[0],
+        total: product.price // Ensure this is set here
+      }));
     } else {
-        console.error("Product price is missing or invalid:", product);
+      console.error("Product price is missing or invalid:", product);
     }
-}, [product]);
+  }, [product]);
 
 
   const handleAddToCart = async () => {
     if (!selectedProduct.color || !selectedProduct.size) {
-        toast.error("Select a color and size");
+      toast.error("Select a color and size");
     } else if (selectedProduct.price === undefined || isNaN(selectedProduct.price)) {
-        toast.error("Price is missing or invalid");
+      toast.error("Price is missing or invalid");
     } else {
-        const updatedProduct = {
-            ...selectedProduct,
-            total: selectedProduct.price * selectedProduct.quantity,
-        };
-        cartStore.addItem(updatedProduct);
-        toast.success(`${product?.name} Added to Cart`);
+      const updatedProduct = {
+        ...selectedProduct,
+        total: selectedProduct.price * selectedProduct.quantity,
+      };
+      cartStore.addItem(updatedProduct);
+      toast.success(`${product?.name} Added to Cart`);
     }
-};
+  };
 
 
   return (
@@ -121,7 +121,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
               </span>
 
             </div>
-            {product?.discount ? <p className="tracking-wide text-xl font-medium "><span className="line-through decoration-red-500 decoration-2 mr-2">${product.price}</span> ${(100 - product.discount) / 100 * product.price}</p> : <p className="tracking-wide text-xl font-medium">${product?.price}</p>}
+            {product?.discount ? <p className="tracking-wide text-xl font-medium "><span className="line-through decoration-red-500 decoration-2 mr-2">₹{product.price}</span> ₹{(100 - product.discount) / 100 * product.price}</p> : <p className="tracking-wide text-xl font-medium">₹{product?.price}</p>}
             <p className="leading-relaxed mt-6">{product?.description}</p>
             <div className="flex my-6 gap-10 items-center pb-5 border-b-2 border-gray-100">
               <div className="flex items-center gap-3">
